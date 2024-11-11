@@ -51,10 +51,11 @@ function Home() {
   }
   
   useEffect(() => {
-      cardsRef.current.addEventListener('wheel', handleWheel);
+      const ref = cardsRef.current;
+      ref.addEventListener('wheel', handleWheel);
   
       return () => {
-          cardsRef.current.removeEventListener('wheel', handleWheel);
+          ref.removeEventListener('wheel', handleWheel);
       };
   }, [])
 
