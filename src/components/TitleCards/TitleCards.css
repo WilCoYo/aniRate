@@ -1,7 +1,9 @@
 
 .anime-card {
-   width: 12%;
-   
+   width: 13%;
+   background-image: linear-gradient(180deg, rgb(43, 43, 43) 10%,
+   transparent);
+   flex-shrink: 0;
 }
 
 .anime-card:hover {
@@ -15,10 +17,10 @@
 
 .anime-card img {
 	width: 100%;
-    height: 100%;
 }
 
 .anime-card a {
     text-decoration: none;
     color: #fff;
 }
+

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import './Home.css'
 import Navbar from '../../../components/Navbar/Navbar'
@@ -14,17 +15,48 @@ function Home() {
   const [topAnime, setTopAnime] = useState([]);
 
   const GetTopAnime = async () => {
-    const temp = await fetch(`https://api.jikan.moe/v4/top/anime?filter=airing&page=1&limit=6`) //switch to airing//
+    const temp = await fetch(`https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10`) //switched to airing//
       .then(res => res.json());
 
-    setTopAnime(temp.data.slice(0, 6)); 
-  }
+    setTopAnime(temp.data.slice(0, 12)); 
+
+      // Create a Set to track unique mal_id values
+    const uniqueIds = new Set();
+
+    // Filter the data to remove duplicates
+    const filteredData = temp.data.filter(anime => {
+      if (!uniqueIds.has(anime.mal_id)) {
+        uniqueIds.add(anime.mal_id);
+        return true;
+      }
+      return false;
+    });
+
+    setTopAnime(filteredData);
+    }
+
+  
 
   useEffect(() => {
     GetTopAnime();
 
   }, []);
 
+
+  const cardsRef = useRef();
+
+  const handleWheel = (event) => {
+      event.preventDefault();
+      cardsRef.current.scrollLeft += event.deltaY;
+  }
+  
+  useEffect(() => {
+      cardsRef.current.addEventListener('wheel', handleWheel);
+  
+      return () => {
+          cardsRef.current.removeEventListener('wheel', handleWheel);
+      };
+  }, [])
 
   return (
     <div className='home'>
@@ -51,17 +83,17 @@ function Home() {
 
 
         <div className="popular-section">
-        <h3>Top Anime</h3>
-            <div className="card-list">
-              {topAnime.map(anime => (
-                
-                <TitleCards 
-                  anime={anime}
-                  key={anime.mal_id} 
-                />
+        <h3>Top Anime</h3> 
+          <div className="popular-list" ref={cardsRef}>
+            {topAnime.map(anime => (
+              
+              <TitleCards 
+                anime={anime}
+                key={anime.mal_id} 
+              />
 
-              ))} 
-            </div>
+            ))} 
+          </div> 
         </div>
     </div>
   )

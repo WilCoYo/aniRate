@@ -87,17 +87,23 @@
     padding: 1rem 3rem;
     font-size: 2rem;
     text-align: start;
+    overflow-x: hidden;
 }
 
 
-.card-list {
+
+.popular-list {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     text-wrap: wrap;
-    gap: 1rem;
+    gap: 2.5rem;
     padding-top: 1rem;
-    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.popular-list::-webkit-scrollbar {
+    display: none;
 }
 
 
