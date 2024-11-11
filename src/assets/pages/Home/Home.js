@@ -3,11 +3,14 @@ import { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import './Home.css'
 import Navbar from '../../../components/Navbar/Navbar'
+import TitleCards from '../../../components/TitleCards/TitleCards';
+import Footer from '../../../components/Footer/Footer';
+
 import hero_banner from '../../images/hero-image.jpg'
 import hero_title from '../../images/hero-image-title.png'
 import play_icon from '../../images/play-icon.svg'
 import info_icon from '../../images/info-icon.svg'
-import TitleCards from '../../../components/TitleCards/TitleCards';
+
 
 
 function Home() {
@@ -84,18 +87,20 @@ function Home() {
 
 
         <div className="popular-section">
-        <h3>Top Anime</h3> 
-          <div className="popular-list" ref={cardsRef}>
-            {topAnime.map(anime => (
-              
-              <TitleCards 
-                anime={anime}
-                key={anime.mal_id} 
-              />
+          <h3>Top Anime</h3> 
+            <div className="popular-list" ref={cardsRef}>
+              {topAnime.map(anime => (
+                
+                <TitleCards 
+                  anime={anime}
+                  key={anime.mal_id} 
+                />
 
-            ))} 
-          </div> 
+              ))} 
+            </div> 
+            <Footer />
         </div>
+
     </div>
   )
 }

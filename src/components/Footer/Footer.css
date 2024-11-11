@@ -1,0 +1,28 @@
+.footer {
+    max-width: 50rem;
+    z-index: 5;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 1.75rem;
+    margin: 2.5rem 0;
+}
+
+.footer-icons img {
+    width: 2rem;
+    cursor: pointer;
+}
+
+.footer ul {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    list-style: none;
+    font-size: 1rem;
+}
+
+.footer p {
+    font-size: 1rem;
+}
