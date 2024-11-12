@@ -5,6 +5,7 @@ import search_icon from '../../assets/images/search-icon.svg'
 import bell_icon from '../../assets/images/bell-icon.svg'
 import profile_icon from'../../assets/images/profile-icon.svg'
 import drop_icon from'../../assets/images/drop-down.svg'
+import { logout } from '../../firebase'
 
 
 function Navbar() {
@@ -29,7 +30,7 @@ function Navbar() {
             <img src={profile_icon} alt='Human Shaped Icon' className='profile'/>
             <img src={drop_icon} alt='Downward arrow' className="dropdown-arrow"/>
             <div className="dropdown">
-              <p>Sign Out</p>
+              <p onClick={() => {logout()}}>Sign Out</p>
             </div>
           </div>
       </div>

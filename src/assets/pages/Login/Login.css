@@ -2,6 +2,10 @@
     height: 100vh;
     background-color: white;
     text-align: center;
+    background: url('../../images/login-background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -90,5 +94,13 @@
     font-weight: 500;
     cursor: pointer;
     
+}
+
+.login-gif {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
