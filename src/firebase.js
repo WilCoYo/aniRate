@@ -5,8 +5,8 @@ import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA23CLmzxo0cWgO0dO0ZSnMXdjg47o3ScQ",
-  authDomain: "anirate-30a45.firebaseapp.com",
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
   projectId: "anirate-30a45",
   storageBucket: "anirate-30a45.firebasestorage.app",
   messagingSenderId: "759353238131",

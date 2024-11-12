@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate} from 'react-router-dom'
 import Login from './assets/pages/Login/Login.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.js'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
