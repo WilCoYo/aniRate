@@ -94,6 +94,7 @@ function Home() {
                 <TitleCards 
                   anime={anime}
                   key={anime.mal_id} 
+                  // userId={userId}
                 />
 
               ))} 

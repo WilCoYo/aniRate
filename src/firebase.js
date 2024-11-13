@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { setDoc, getDoc, addDoc, collection, getFirestore, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
@@ -30,6 +30,7 @@ const signup = async (name, email, password) => {
             name,
             authProvider: "local",
             email,
+            watchlist: []
         });
     } catch (error) {
         console.log(error);
@@ -50,4 +51,32 @@ const logout = () => {
     signOut(auth);
 }
 
-export { auth, db, login, signup, logout };
+
+    const addToWatchlist = async (uid, animeId) => {
+        
+        try {
+            const userRef = doc(db, "user", uid);
+            const userDoc = await getDoc(userRef);
+
+            if(userDoc.exists) {
+                await setDoc(doc(userRef, "watchlist", animeId), { animeId })
+                console.log("Anime added to watchlist successfully")
+            } else {
+                await setDoc(userRef, {
+                    authProvider: "local",
+                    email: "nadine@jesus.com",
+                    name: "Nadine",
+                    uid: "XWAYjcpZaZgk0FjXVvaqkr3i6J3"
+                  });
+                  await setDoc(doc(userRef, "watchlist", animeId), { animeId });
+                console.log("User document craeted and anime added to watchlist")
+            } 
+        } catch (error) {
+            console.log("Error adding anime to watchlist", error);
+        }
+    };
+
+
+
+
+export { auth, db, login, signup, logout, addToWatchlist };
