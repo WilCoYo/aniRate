@@ -3,7 +3,7 @@ import './Login.css'
 import logo from '../../images/gojo-cat-logo.png'
 import { login, signup } from '../../../firebase';
 import loading_gif from '../../images/loading-anime.gif';
-import { getFirestore } from 'firebase/firestore';
+// import { getFirestore } from 'firebase/firestore';
 
 
 function Login() {
