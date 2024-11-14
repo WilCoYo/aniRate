@@ -6,7 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.js'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import loading_gif from '../../images/loading-anime.gif';
+import loading_gif from './assets/images/loading-anime.gif';
 
 function App() {
   const [loading, setLoading] = useState(true);
