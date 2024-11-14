@@ -31,13 +31,13 @@ function TitleCards({anime}) {
         
     }
 
-    const handleRemoveFromWatchlist = () => {
-        if(anime.mal_id) {
-            removeFromWatchlist(userId, anime.mal_id);
-        } else {
-            console.log("Anime not found or already deleted")
-        }
-    }
+    // const handleRemoveFromWatchlist = () => {
+    //     if(anime.mal_id) {
+    //         removeFromWatchlist(userId, anime.mal_id);
+    //     } else {
+    //         console.log("Anime not found or already deleted")
+    //     }
+    // }
 
 
 
