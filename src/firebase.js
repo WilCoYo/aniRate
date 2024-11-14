@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { setDoc, getDoc, addDoc, collection, getFirestore, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import {addDoc, collection, getFirestore, query, where, updateDoc, arrayUnion, getDocs, arrayRemove  } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
@@ -52,31 +52,49 @@ const logout = () => {
 }
 
 
-    const addToWatchlist = async (uid, animeId) => {
-        
-        try {
-            const userRef = doc(db, "user", uid);
-            const userDoc = await getDoc(userRef);
-
-            if(userDoc.exists) {
-                await setDoc(doc(userRef, "watchlist", animeId), { animeId })
-                console.log("Anime added to watchlist successfully")
-            } else {
-                await setDoc(userRef, {
-                    authProvider: "local",
-                    email: "nadine@jesus.com",
-                    name: "Nadine",
-                    uid: "XWAYjcpZaZgk0FjXVvaqkr3i6J3"
-                  });
-                  await setDoc(doc(userRef, "watchlist", animeId), { animeId });
-                console.log("User document craeted and anime added to watchlist")
-            } 
-        } catch (error) {
-            console.log("Error adding anime to watchlist", error);
-        }
-    };
+async function addToWatchlist(uid, item) {
+    const userRef = collection(db, "user");
+  
+// Query the user document based on the uid field
+    const q = query(userRef, where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+  
+// Loop through query results (should be only one document)
+    querySnapshot.forEach(async (doc) => {
+// Add item to the watchlist array
+      await updateDoc(doc.ref, {
+        watchlist: arrayUnion(item)
+      });
+      console.log('Added to watchlist');
+    });
+  
+    if (querySnapshot.empty) {
+      console.log("No user found with the provided uid.");
+    }
+  }
 
 
+  async function removeFromWatchlist(uid, item) {
+    const userRef = collection(db, "user");
+  
+// Query the user document based on the uid field
+    const q = query(userRef, where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+  
+// Loop through query results (should be only one document)
+    querySnapshot.forEach(async (doc) => {
+// Remove item from the watchlist array
+      await updateDoc(doc.ref, {
+        watchlist: arrayRemove(item)
+      });
+      console.log('Removed from watchlist');
+    });
+  
+    if (querySnapshot.empty) {
+      console.log("No user found with the provided uid.");
+    }
+  }
+  
 
 
-export { auth, db, login, signup, logout, addToWatchlist };
+export { auth, db, login, signup, logout, addToWatchlist, removeFromWatchlist };

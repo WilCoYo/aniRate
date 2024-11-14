@@ -2,7 +2,7 @@ import React from 'react'
 import './TitleCards.css'
 import info_icon from '../../assets/images/info-icon.svg'
 import add_icon from '../../assets/images/add-icon.svg'
-import { addToWatchlist, auth} from '../../firebase'
+import { addToWatchlist, auth, removeFromWatchlist} from '../../firebase'
 
 
 
@@ -29,6 +29,14 @@ function TitleCards({anime}) {
             console.log("User is not authenticated")
         }
         
+    }
+
+    const handleRemoveFromWatchlist = () => {
+        if(anime.mal_id) {
+            removeFromWatchlist(userId, anime.mal_id);
+        } else {
+            console.log("Anime not found or already deleted")
+        }
     }
 
 
