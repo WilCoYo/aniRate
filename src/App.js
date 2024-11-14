@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,10 +20,16 @@ function App() {
         console.log("Logged Out")
         navigate('/login')
       }
-    })
+      setLoading(false);
+    });
   }, [navigate])
 
+  
+
   return (
+    loading?<div className='login-gif'>
+    <img src={loading_gif} alt='Anime girl running' />
+    </div>:
     <div>
         <ToastContainer theme='dark' />
         <Routes>
