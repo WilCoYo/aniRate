@@ -2,7 +2,7 @@ import React from 'react'
 import './TitleCards.css'
 import info_icon from '../../assets/images/info-icon.svg'
 import add_icon from '../../assets/images/add-icon.svg'
-import { addToWatchlist, auth, removeFromWatchlist} from '../../firebase'
+import { addToWatchlist, auth} from '../../firebase'
 
 
 
