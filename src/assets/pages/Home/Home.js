@@ -2,6 +2,7 @@ import React from 'react'
 import { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import './Home.css'
+
 import Navbar from '../../../components/Navbar/Navbar'
 import TitleCards from '../../../components/TitleCards/TitleCards';
 import Footer from '../../../components/Footer/Footer';
@@ -13,7 +14,10 @@ import info_icon from '../../images/info-icon.svg'
 
 
 
-function Home() {
+
+
+
+function Home( {userId} ) {
 
   const [topAnime, setTopAnime] = useState([]);
 
@@ -44,6 +48,8 @@ function Home() {
     GetTopAnime();
 
   }, []);
+
+
 
 
   const cardsRef = useRef();
@@ -94,13 +100,19 @@ function Home() {
                 <TitleCards 
                   anime={anime}
                   key={anime.mal_id} 
-                  // userId={userId}
                 />
 
               ))} 
             </div> 
             <Footer />
         </div>
+
+        {/* <div className='watchlist-section'>
+            <h3>Your Watchlist</h3>
+            <div className='watchlist'>
+                
+            </div>
+        </div> */}
 
     </div>
   )

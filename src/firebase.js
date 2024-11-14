@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import {addDoc, collection, getFirestore, query, where, updateDoc, arrayUnion, getDocs, arrayRemove  } from "firebase/firestore";
+import {addDoc, collection, getFirestore, query, where, updateDoc, arrayUnion, getDocs, arrayRemove} from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
@@ -52,7 +52,7 @@ const logout = () => {
 }
 
 
-async function addToWatchlist(uid, item) {
+const addToWatchlist = async (uid, item) => {
     const userRef = collection(db, "user");
   
 // Query the user document based on the uid field
@@ -74,7 +74,7 @@ async function addToWatchlist(uid, item) {
   }
 
 
-  async function removeFromWatchlist(uid, item) {
+  const removeFromWatchlist = async (uid, item) => {
     const userRef = collection(db, "user");
   
 // Query the user document based on the uid field
@@ -94,7 +94,21 @@ async function addToWatchlist(uid, item) {
       console.log("No user found with the provided uid.");
     }
   }
+
+
+//   const getWatchlist = async (uid) => {
+//     const userRef = collection(db, "user");
+    
+//     const q = query(userRef, where("uid", "==", uid));
+//     const querySnapshot = await getDocs(q,);
+      
+//     querySnapshot.forEach((doc) => {
+//       const userData = doc.data();
+//       console.log("Watchlist:", userData.watchlist);
+// });
+//   }
+
   
 
 
-export { auth, db, login, signup, logout, addToWatchlist, removeFromWatchlist };
+export { auth, db, login, signup, logout, addToWatchlist, removeFromWatchlist};

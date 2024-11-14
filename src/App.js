@@ -25,7 +25,7 @@ function App() {
     });
   }, [navigate])
 
-  
+
 
   return (
     loading?<div className='login-gif'>
