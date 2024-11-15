@@ -82,6 +82,8 @@ function Home( ) {
             
             // Update state with all fetched anime data
             setWatchlist(animeData);
+          }else {
+            setWatchlist([]);
           }
         }
       } catch (error) {
@@ -93,7 +95,7 @@ function Home( ) {
     GetTopAnime();
     FetchWatchlist()
 
-  },  [userId, GetTopAnime, FetchWatchlist, watchlist]);
+  },  [userId, watchlist]);
 
  
 
