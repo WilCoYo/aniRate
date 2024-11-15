@@ -1,6 +1,6 @@
 import React from 'react'
-import { useRef } from 'react';
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+
 import './Home.css'
 
 import Navbar from '../../../components/Navbar/Navbar'
@@ -26,7 +26,7 @@ function Home( ) {
 
   const userId = auth.currentUser?.uid;
 
-  const GetTopAnime = async () => {
+  const GetTopAnime = useCallback(async () => {
     try {
       const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10');
       
@@ -57,13 +57,13 @@ function Home( ) {
     } catch (error) {
       console.error('Error fetching top anime:', error);
     }
-  };
+  }, []);
   
 
   
 
   
-    const FetchWatchlist = async () => {
+    const FetchWatchlist = useCallback(async () => {
       try {
         if (userId) {
           // Get the array of IDs from Firebase
@@ -87,13 +87,13 @@ function Home( ) {
       } catch (error) {
         console.error('Error fetching watchlist:', error);
       }
-    };
+    }, [userId] );
  
   useEffect(() => {
     GetTopAnime();
     FetchWatchlist()
 
-  },  [watchlist]);
+  },  [userId, GetTopAnime, FetchWatchlist, watchlist]);
 
  
 
