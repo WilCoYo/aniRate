@@ -56,7 +56,7 @@ function Home( ) {
     }
   };
 
-  const FetchWatchlist = async () => {
+  const FetchWatchlist = useCallback(async () => {
     try {
       if (userId) {
         const watchlistIds = await getWatchlistData(userId);
@@ -66,7 +66,7 @@ function Home( ) {
               .then(res => res.json())
               .then(data => data.data)
           );
-
+  
           const animeData = await Promise.all(animePromises);
           setWatchlist(animeData);
         }
@@ -74,16 +74,14 @@ function Home( ) {
     } catch (error) {
       console.error('Error fetching watchlist:', error);
     }
-  };
+  }, [userId]);
 
   // Single useEffect for fetching both data sets
   useEffect(() => {
     GetTopAnime();
-    if (userId) {
-      FetchWatchlist();
-    }
-  }, [userId, watchlist]); // Only depend on userId
-
+    FetchWatchlist();
+    
+  }, [userId, watchlist, FetchWatchlist]); 
  
 
 
