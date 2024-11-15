@@ -26,7 +26,7 @@ function Home( ) {
 
   const userId = auth.currentUser?.uid;
 
-  const GetTopAnime = useCallback(async () => {
+  const GetTopAnime = async () => {
     try {
       const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10');
       
@@ -40,62 +40,49 @@ function Home( ) {
         console.error('Invalid API response format:', data);
         return;
       }
-  
-      // Create a Set to track unique mal_id values
+
       const uniqueIds = new Set();
-  
-      // Filter the data to remove duplicates
       const filteredData = data.data.filter(anime => {
-        if (!uniqueIds.has(anime.mal_id)) {
+        if (anime && anime.mal_id && !uniqueIds.has(anime.mal_id)) {
           uniqueIds.add(anime.mal_id);
           return true;
         }
         return false;
       });
-  
+
       setTopAnime(filteredData);
     } catch (error) {
       console.error('Error fetching top anime:', error);
     }
-  }, []);
-  
+  };
 
-  
+  const FetchWatchlist = async () => {
+    try {
+      if (userId) {
+        const watchlistIds = await getWatchlistData(userId);
+        if (watchlistIds && watchlistIds.length > 0) {
+          const animePromises = watchlistIds.map(id => 
+            fetch(`https://api.jikan.moe/v4/anime/${id}`)
+              .then(res => res.json())
+              .then(data => data.data)
+          );
 
-  
-    const FetchWatchlist = useCallback(async () => {
-      try {
-        if (userId) {
-          // Get the array of IDs from Firebase
-          const watchlistIds = await getWatchlistData(userId);
-          
-          if (watchlistIds && watchlistIds.length > 0) {
-            // Create an array of promises for all API calls
-            const animePromises = watchlistIds.map(id => 
-              fetch(`https://api.jikan.moe/v4/anime/${id}`)
-                .then(res => res.json())
-                .then(data => data.data)
-            );
-    
-            // Wait for all API calls to complete
-            const animeData = await Promise.all(animePromises);
-            
-            // Update state with all fetched anime data
-            setWatchlist(animeData);
-          }else {
-            setWatchlist([]);
-          }
+          const animeData = await Promise.all(animePromises);
+          setWatchlist(animeData);
         }
-      } catch (error) {
-        console.error('Error fetching watchlist:', error);
       }
-    }, [userId] );
- 
+    } catch (error) {
+      console.error('Error fetching watchlist:', error);
+    }
+  };
+
+  // Single useEffect for fetching both data sets
   useEffect(() => {
     GetTopAnime();
-    FetchWatchlist()
-
-  },  [userId, watchlist]);
+    if (userId) {
+      FetchWatchlist();
+    }
+  }, [userId, watchlist]); // Only depend on userId
 
  
 
