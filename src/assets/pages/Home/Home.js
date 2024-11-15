@@ -5,6 +5,7 @@ import './Home.css'
 
 import Navbar from '../../../components/Navbar/Navbar'
 import TitleCards from '../../../components/TitleCards/TitleCards';
+import Watchlist from '../../../components/Watchlist/Watchlist';
 import Footer from '../../../components/Footer/Footer';
 
 import hero_banner from '../../images/hero-image.jpg'
@@ -12,44 +13,89 @@ import hero_title from '../../images/hero-image-title.png'
 import play_icon from '../../images/play-icon.svg'
 import info_icon from '../../images/info-icon.svg'
 
+// import { getWatchlist } from '../../../firebase';
+import { getWatchlistData, auth } from '../../../firebase';
 
 
 
 
-
-function Home( {userId} ) {
+function Home( ) {
 
   const [topAnime, setTopAnime] = useState([]);
+  const [watchlist, setWatchlist] = useState([])
+
+  const userId = auth.currentUser?.uid;
 
   const GetTopAnime = async () => {
-    const temp = await fetch(`https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10`) //switched to airing//
-      .then(res => res.json());
-
-    setTopAnime(temp.data.slice(0, 12)); 
-
-      // Create a Set to track unique mal_id values
-    const uniqueIds = new Set();
-
-    // Filter the data to remove duplicates
-    const filteredData = temp.data.filter(anime => {
-      if (!uniqueIds.has(anime.mal_id)) {
-        uniqueIds.add(anime.mal_id);
-        return true;
+    try {
+      const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return false;
-    });
-
-    setTopAnime(filteredData);
+      
+      const data = await response.json();
+      
+      if (!data || !data.data) {
+        console.error('Invalid API response format:', data);
+        return;
+      }
+  
+      // Create a Set to track unique mal_id values
+      const uniqueIds = new Set();
+  
+      // Filter the data to remove duplicates
+      const filteredData = data.data.filter(anime => {
+        if (!uniqueIds.has(anime.mal_id)) {
+          uniqueIds.add(anime.mal_id);
+          return true;
+        }
+        return false;
+      });
+  
+      setTopAnime(filteredData);
+    } catch (error) {
+      console.error('Error fetching top anime:', error);
     }
+  };
+  
 
   
 
+  
+    const FetchWatchlist = async () => {
+      try {
+        if (userId) {
+          // Get the array of IDs from Firebase
+          const watchlistIds = await getWatchlistData(userId);
+          
+          if (watchlistIds && watchlistIds.length > 0) {
+            // Create an array of promises for all API calls
+            const animePromises = watchlistIds.map(id => 
+              fetch(`https://api.jikan.moe/v4/anime/${id}`)
+                .then(res => res.json())
+                .then(data => data.data)
+            );
+    
+            // Wait for all API calls to complete
+            const animeData = await Promise.all(animePromises);
+            
+            // Update state with all fetched anime data
+            setWatchlist(animeData);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching watchlist:', error);
+      }
+    };
+ 
   useEffect(() => {
     GetTopAnime();
+    FetchWatchlist()
 
-  }, []);
+  },  [watchlist]);
 
-
+ 
 
 
   const cardsRef = useRef();
@@ -104,15 +150,20 @@ function Home( {userId} ) {
 
               ))} 
             </div> 
+            <div className="popular-list" ref={cardsRef}>
+              {watchlist.map(anime => (
+                
+                <Watchlist 
+                  anime={anime}
+                  key={anime.mal_id} 
+                />
+
+              ))} 
+            </div> 
             <Footer />
         </div>
 
-        {/* <div className='watchlist-section'>
-            <h3>Your Watchlist</h3>
-            <div className='watchlist'>
-                
-            </div>
-        </div> */}
+        
 
     </div>
   )

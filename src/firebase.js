@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import {addDoc, collection, getFirestore, query, where, updateDoc, arrayUnion, getDocs, arrayRemove} from "firebase/firestore";
+import {addDoc, collection, getFirestore, query, where, updateDoc, arrayUnion, getDocs, arrayRemove } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
@@ -13,6 +13,13 @@ const firebaseConfig = {
   appId: "1:759353238131:web:29805066a0098ebca64006",
   measurementId: "G-NW5JN1DPBT"
 };
+
+// {
+//   "rules": {
+//     ".read": "now < 1734238800000",  // 2024-12-15
+//     ".write": "now < 1734238800000",  // 2024-12-15
+//   }
+// }
 
 
 const app = initializeApp(firebaseConfig);
@@ -96,7 +103,39 @@ const addToWatchlist = async (uid, item) => {
   }
 
 
-//   const getWatchlist = async (uid) => {
+
+
+const getWatchlistData = async (uid) => {
+  try {
+    const colRef = collection(db, 'user');
+    const snapshot = await getDocs(colRef);
+
+    const users = []
+    snapshot.docs.forEach((doc) => {
+      users.push({...doc.data(), id: doc.id })
+    });
+
+    const user = users.find(user => user.uid === uid);
+
+
+    if(user && user.watchlist){
+      return user.watchlist;
+    } else {
+      console.log("No watchlist found for user")
+      return [];
+    }
+
+  } catch (error) {
+    console.error('Error fetching watchlist:', error)
+    throw error;
+  }
+}
+
+
+
+
+
+
 //     const userRef = collection(db, "user");
     
 //     const q = query(userRef, where("uid", "==", uid));
@@ -106,9 +145,9 @@ const addToWatchlist = async (uid, item) => {
 //       const userData = doc.data();
 //       console.log("Watchlist:", userData.watchlist);
 // });
-//   }
+  
 
   
 
 
-export { auth, db, login, signup, logout, addToWatchlist, removeFromWatchlist};
+export { auth, db, login, signup, logout, addToWatchlist, removeFromWatchlist, getWatchlistData};

@@ -11,6 +11,7 @@ import { addToWatchlist, auth} from '../../firebase'
 
 
 
+
 function TitleCards({anime}) {  
     const userId = auth.currentUser?.uid;
 
@@ -38,6 +39,9 @@ function TitleCards({anime}) {
     //         console.log("Anime not found or already deleted")
     //     }
     // }
+
+
+
 
 
 

@@ -1,6 +1,21 @@
 import React from 'react'
+import '../TitleCards/TitleCards.css'
+import info_icon from '../../assets/images/info-icon.svg'
+import add_icon from '../../assets/images/add-icon.svg'
+import { removeFromWatchlist, auth } from '../../firebase'
 
-function Watchlist() {
+function Watchlist({anime}) {
+    const userId = auth.currentUser?.uid;
+
+    const handleRemoveToWatchlist = () => {
+        if(userId) {
+            removeFromWatchlist(userId, anime.mal_id);
+        } else {
+            console.log("User is not authenticated")
+        }
+        
+    }
+
     return (
         <div className='anime-card'>
             <div className='card-list'>
@@ -22,9 +37,9 @@ function Watchlist() {
                     <div className='titlecard-btns'>
                         
                         <button className='titlecard-btn-lft btn btn-content'
-                                onClick={handleAddToWatchlist}
+                                onClick={handleRemoveToWatchlist}
                         >
-                            <img src={add_icon} alt=''/>Add to watchlist
+                            <img src={add_icon} alt=''/>Remove from watchlist
                         </button> 
 
                         <button className='titlecard-btn-rt btn'>
