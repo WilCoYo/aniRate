@@ -81,6 +81,8 @@ const addToWatchlist = async (uid, item) => {
   }
 
 
+
+  
   const removeFromWatchlist = async (uid, item) => {
     const userRef = collection(db, "user");
   

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect} from 'react';
 
 import './Home.css'
 
@@ -20,69 +20,49 @@ import { getWatchlistData, auth } from '../../../firebase';
 
 
 function Home( ) {
-
   const [topAnime, setTopAnime] = useState([]);
-  const [watchlist, setWatchlist] = useState([])
-
+  const [watchlist, setWatchlist] = useState([]);
   const userId = auth.currentUser?.uid;
 
-  const GetTopAnime = async () => {
-    try {
-      const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      if (!data || !data.data) {
-        console.error('Invalid API response format:', data);
-        return;
-      }
-
-      const uniqueIds = new Set();
-      const filteredData = data.data.filter(anime => {
-        if (anime && anime.mal_id && !uniqueIds.has(anime.mal_id)) {
-          uniqueIds.add(anime.mal_id);
-          return true;
-        }
-        return false;
-      });
-
-      setTopAnime(filteredData);
-    } catch (error) {
-      console.error('Error fetching top anime:', error);
-    }
-  };
-
-  const FetchWatchlist = useCallback(async () => {
-    try {
-      if (userId) {
-        const watchlistIds = await getWatchlistData(userId);
-        if (watchlistIds && watchlistIds.length > 0) {
-          const animePromises = watchlistIds.map(id => 
-            fetch(`https://api.jikan.moe/v4/anime/${id}`)
-              .then(res => res.json())
-              .then(data => data.data)
-          );
-  
-          const animeData = await Promise.all(animePromises);
-          setWatchlist(animeData);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching watchlist:', error);
-    }
-  }, [userId]);
-
-  // Single useEffect for fetching both data sets
+  // Fetch Top Anime on initial render
   useEffect(() => {
-    GetTopAnime();
-    FetchWatchlist();
-    
-  }, [userId, watchlist, FetchWatchlist]); 
- 
+    const fetchTopAnime = async () => {
+      try {
+        const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10');
+        const data = await response.json();
+        const uniqueAnime = data.data.filter((anime, index, self) => 
+          index === self.findIndex((t) => t.mal_id === anime.mal_id)
+        );
+        setTopAnime(uniqueAnime);
+      } catch (error) {
+        console.error('Error fetching top anime:', error);
+      }
+    };
+
+    fetchTopAnime();
+  }, []);
+
+  // Fetch Watchlist when userId changes or watchlist is modified
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      if (userId) {
+        try {
+          const watchlistIds = await getWatchlistData(userId);
+          if (watchlistIds?.length) {
+            const animePromises = watchlistIds.map(id => 
+              fetch(`https://api.jikan.moe/v4/anime/${id}`).then(res => res.json())
+            );
+            const animeData = await Promise.all(animePromises);
+            setWatchlist(animeData.map(res => res.data));
+          }
+        } catch (error) {
+          console.error('Error fetching watchlist:', error);
+        }
+      }
+    };
+
+    fetchWatchlist();
+  }, [userId, watchlist]);
 
 
   const cardsRef = useRef();
@@ -94,12 +74,14 @@ function Home( ) {
   
   useEffect(() => {
       const ref = cardsRef.current;
-      ref.addEventListener('wheel', handleWheel);
-  
-      return () => {
+      if(ref) {
+        ref.addEventListener('wheel', handleWheel);
+
+        return () => {
           ref.removeEventListener('wheel', handleWheel);
       };
-  }, [])
+    }
+  }, [cardsRef])
 
   return (
     <div className='home'>
@@ -127,26 +109,35 @@ function Home( ) {
 
         <div className="popular-section">
           <h3>Top Anime</h3> 
+          {topAnime.length > 0 ? (
             <div className="popular-list" ref={cardsRef}>
               {topAnime.map(anime => (
-                
-                <TitleCards 
-                  anime={anime}
-                  key={anime.mal_id} 
-                />
+                anime && anime.mal_id ? (
+                  <TitleCards 
+                    key={anime.mal_id}
+                    anime={anime} 
+                  />
+                ) : null
+              ))}
+            </div>
+          ) : (
+            <p>No top anime found</p>
+          )}
 
-              ))} 
-            </div> 
+          {watchlist.length > 0 ? (
             <div className="popular-list" ref={cardsRef}>
               {watchlist.map(anime => (
-                
-                <Watchlist 
-                  anime={anime}
-                  key={anime.mal_id} 
-                />
-
-              ))} 
-            </div> 
+                anime && anime.mal_id ? (
+                  <Watchlist 
+                    key={anime.mal_id}
+                    anime={anime} 
+                  />
+                ) : null
+              ))}
+            </div>
+          ) : (
+            <p>No watchlist anime found</p>
+          )}
             <Footer />
         </div>
 
