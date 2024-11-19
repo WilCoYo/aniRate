@@ -86,24 +86,22 @@
     padding: 4rem 3rem;
     font-size: 2rem;
     text-align: start;
-    overflow-x: hidden;
+    overflow-x: visible;
 }
 
 
 
 .popular-list {
     display: flex;
-    justify-content: space-between;
-    text-wrap: wrap;
-    gap: 2.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    gap: 2.5rem; /* Maintain gap between cards */
+    padding: 1rem 0;
     overflow-x: scroll;
     overflow-y: hidden;
+    white-space: nowrap; /* Prevent wrapping of items */
 }
+
 
 .popular-list::-webkit-scrollbar {
     display: none;
 }
-
 
