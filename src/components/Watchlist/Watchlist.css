@@ -1,17 +1,18 @@
 .watchlist {
     position: absolute;
-    top: 25%;
-    right: 15%;
+    top: 0;
+    right: 1rem;
     width: 40rem;
-    z-index: 10;
+    
+    z-index: 3;
       /* other styles */
-      background: rgba(39, 39, 39, 0.3);
+      background: rgba(39, 39, 39, 0.75);
       backdrop-filter: blur(10px);
        /* fallback for old browsers */
       -webkit-backdrop-filter: blur(60px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     
-      
+      display: none;
 }
 
 .watchlist h2 {
@@ -32,8 +33,63 @@
 
 .weekday p {
     padding: 1rem;
+    font-size: 1.25rem;
 }
 
 .weekday li{
     list-style: none;
+    font-size: 1.25rem;
 } 
+
+.watchlist-loading {
+    margin: 0 auto;
+    padding-left: 3rem;
+}
+
+.watchlist-dropdown {
+    position: fixed;
+    top: 4rem;
+    right: 12rem;
+    display: flex;
+    font-size: 1.5rem;
+    z-index: 11;
+}
+
+.watchlist-dropdown:hover {
+    cursor: pointer;
+}
+
+.watchlist-dropdown:hover .watchlist {
+    display: block;
+    
+}
+
+@-webkit-keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+              opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(30px);
+              transform: translateY(30px);
+              opacity: 1;
+    }
+  }
+  @keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+              opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(30px);
+              transform: translateY(30px);
+              opacity: 1;
+    }
+  }
+
+  .slide-bottom {
+	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
