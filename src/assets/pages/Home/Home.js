@@ -54,7 +54,8 @@ useEffect(() => {
   const handleWheel = (event) => {
     if (ref) {
       event.preventDefault();
-      ref.scrollLeft += event.deltaY;
+      const delta = event.deltaY || event.deltaX; // Account for devices using deltaX
+      ref.scrollLeft += delta;
     }
   };
 
