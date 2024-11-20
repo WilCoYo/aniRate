@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef, useState, useEffect} from 'react';
+import { useRef, useState, useEffect, useLayoutEffect} from 'react';
 
 import './Home.css'
 
@@ -29,35 +29,34 @@ function Home( ) {
     const fetchTopAnime = async () => {
       try {
         const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing&limit=12&offset=10');
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         const uniqueAnime = data.data.filter((anime, index, self) => 
           index === self.findIndex((t) => t.mal_id === anime.mal_id)
         );
+        console.log('Fetched anime data:', uniqueAnime); // Debug log
         setTopAnime(uniqueAnime);
       } catch (error) {
         console.error('Error fetching top anime:', error);
       }
     };
-
+  
     fetchTopAnime();
   }, []);
-
  
 
 
-const cardsRef = useRef();
+const cardsRef = useRef(null);
 
 
-useEffect(() => {
+useLayoutEffect(() => {
   const ref = cardsRef.current;
-  console.log('Ref assigned:', ref); // This should log the DOM node
-  if (!ref) {
-    console.error('cardsRef is not attached to popular-list');
-  }
+  console.log('Ref assigned:', ref); // Should now log the DOM node
 
   const handleWheel = (event) => {
     if (ref) {
-      console.log('Wheel event triggered'); // Debug log
       event.preventDefault();
       ref.scrollLeft += event.deltaY;
     }
@@ -65,11 +64,30 @@ useEffect(() => {
 
   if (ref) {
     ref.addEventListener('wheel', handleWheel, { passive: false });
+  }
+
+  return () => {
+    if (ref) ref.removeEventListener('wheel', handleWheel);
+  };
+}, []);
+
+useEffect(() => {
+  if (topAnime.length > 0 && cardsRef.current) {
+    const ref = cardsRef.current;
+    console.log('Ref assigned:', ref); // Should now log the DOM node
+
+    const handleWheel = (event) => {
+      event.preventDefault();
+      ref.scrollLeft += event.deltaY;
+    };
+
+    ref.addEventListener('wheel', handleWheel, { passive: false });
+
     return () => {
       ref.removeEventListener('wheel', handleWheel);
     };
   }
-}, [cardsRef]);
+}, [topAnime, cardsRef]);
 
 
 
@@ -105,18 +123,18 @@ useEffect(() => {
         <div className="popular-section">
           <h3>Top Anime</h3> 
           {topAnime.length > 0 ? (
-            <div className="popular-list" ref={cardsRef}>
-              {topAnime.map((anime) => (
-                anime && anime.mal_id ? (
-                  <TitleCards 
-                    key={anime.mal_id}
-                    anime={anime} 
-                  />
-                ) : null
-              ))}
-            </div>
+        <div className="popular-list" ref={cardsRef}>
+          {topAnime.map((anime) => (
+            anime && anime.mal_id ? (
+              <TitleCards 
+                key={anime.mal_id}
+                anime={anime} 
+              />
+            ) : null
+          ))}
+        </div>
           ) : (
-            <p>No top anime found</p>
+            <p>Loading top anime...</p>
           )}
             <Footer />
         </div>
