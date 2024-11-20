@@ -97,12 +97,13 @@
     display: flex;
     gap: 2rem;
     padding: 1rem 0;
-    overflow-x: auto;  /* Change from 'scroll' to 'auto' */
+    overflow-x: scroll;  /* Changed back to 'scroll' */
     overflow-y: hidden;
     white-space: nowrap;
-    -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
+ 
+    -webkit-overflow-scrolling: touch;
     
-
+    /* Hide scrollbar but keep functionality */
     scrollbar-width: none;  /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer/Edge */
 }

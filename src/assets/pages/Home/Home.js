@@ -45,15 +45,8 @@ function Home( ) {
  
 
 
-  const cardsRef = useRef();
+const cardsRef = useRef();
 
-//   const handleWheel = (event) => {
-//     console.log("Wheel event triggered:", event.deltaY);
-//     if (cardsRef.current) {
-//         event.preventDefault();
-//         cardsRef.current.scrollLeft += event.deltaY * 1;
-//     }
-// };
 
 useEffect(() => {
   const ref = cardsRef.current;
@@ -71,7 +64,7 @@ useEffect(() => {
       ref.removeEventListener('wheel', handleWheel);
     };
   }
-}, []);
+}, [cardsRef]);
 
 
 
