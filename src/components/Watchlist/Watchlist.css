@@ -33,12 +33,13 @@
 
 .weekday p {
     padding: 1rem;
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 .weekday li{
     list-style: none;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    font-style: italic;
 } 
 
 .watchlist-loading {
@@ -48,10 +49,10 @@
 
 .watchlist-dropdown {
     position: fixed;
-    top: 4rem;
+    top: 4.25rem;
     right: 12rem;
     display: flex;
-    font-size: 1.5rem;
+    font-size: 1rem;
     z-index: 11;
 }
 

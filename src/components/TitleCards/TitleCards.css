@@ -1,6 +1,6 @@
 
 .anime-card {
-   width: 20rem;
+   width: 15rem;
    background-color: rgba(70, 70, 70, 0.199);
    flex-shrink: 0;
    box-shadow: 0px 1px 1rem rgba(128, 128, 128, 0.267);
@@ -12,7 +12,7 @@
     align-items: center;
     text-align: center;
     text-wrap: wrap;
-    font-size: 1.25rem;
+    font-size: 1rem;
     height: 100%;
 }
 
@@ -63,7 +63,7 @@
     padding: .25rem .5rem;
     display: inline-flex;
     align-items: center;
-    font-size: 1rem;
+    font-size: .75rem;
     font-weight: 600;
     background: #fff;
     border-radius: .2rem;

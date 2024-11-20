@@ -5,9 +5,11 @@
 }
 
 .banner-img {
-    width: 100%;
+    min-height: 100vh;
+    min-width: 100%;
     mask-image: linear-gradient(to right, transparent, black 75%);
     -webkit-mask-image: linear-gradient(to right, transparent, black 75%);
+    overflow: hidden;
 }
 
 
@@ -93,7 +95,7 @@
 
 .popular-list {
     display: flex;
-    gap: 2.5rem; /* Maintain gap between cards */
+    gap: 2rem; /* Maintain gap between cards */
     padding: 1rem 0;
     overflow-x: scroll;
     overflow-y: hidden;
