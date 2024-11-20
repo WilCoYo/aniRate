@@ -53,6 +53,7 @@ useEffect(() => {
 
   const handleWheel = (event) => {
     if (ref) {
+      console.log('Wheel event triggered');
       event.preventDefault();
       const delta = event.deltaY || event.deltaX; // Account for devices using deltaX
       ref.scrollLeft += delta;
