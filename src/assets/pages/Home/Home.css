@@ -95,11 +95,16 @@
 
 .popular-list {
     display: flex;
-    gap: 2rem; /* Maintain gap between cards */
+    gap: 2rem;
     padding: 1rem 0;
-    overflow-x: scroll;
+    overflow-x: auto;  /* Change from 'scroll' to 'auto' */
     overflow-y: hidden;
-    white-space: nowrap; /* Prevent wrapping of items */
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
+    
+
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
 }
 
 

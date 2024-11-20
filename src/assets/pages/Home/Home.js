@@ -47,32 +47,31 @@ function Home( ) {
 
   const cardsRef = useRef();
 
-  const handleWheel = (event) => {
-    console.log("Wheel event triggered:", event.deltaY);
-    if (cardsRef.current) {
-        event.preventDefault();
-        cardsRef.current.scrollLeft += event.deltaY * 1;
-    }
-};
+//   const handleWheel = (event) => {
+//     console.log("Wheel event triggered:", event.deltaY);
+//     if (cardsRef.current) {
+//         event.preventDefault();
+//         cardsRef.current.scrollLeft += event.deltaY * 1;
+//     }
+// };
 
 useEffect(() => {
   const ref = cardsRef.current;
 
-  if (!ref) {
-      console.log("cardsRef is not ready yet.");
-      return;
-  }
-
-  console.log("Attaching wheel event listener to:", ref);
-  ref.addEventListener('wheel', handleWheel, { passive: false });
-
-  return () => {
-      console.log("Removing wheel event listener from:", ref);
-      ref.removeEventListener('wheel', handleWheel);
+  const handleWheel = (event) => {
+    if (ref) {
+      event.preventDefault();
+      ref.scrollLeft += event.deltaY;
+    }
   };
-  // eslint-disable-next-line
-}, [cardsRef.current]); // Re-run when `cardsRef.current` changes
 
+  if (ref) {
+    ref.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      ref.removeEventListener('wheel', handleWheel);
+    };
+  }
+}, []);
 
 
 
