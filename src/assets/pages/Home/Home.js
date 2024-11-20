@@ -50,13 +50,16 @@ const cardsRef = useRef();
 
 useEffect(() => {
   const ref = cardsRef.current;
+  console.log('Ref assigned:', ref); // This should log the DOM node
+  if (!ref) {
+    console.error('cardsRef is not attached to popular-list');
+  }
 
   const handleWheel = (event) => {
     if (ref) {
-      console.log('Wheel event triggered');
+      console.log('Wheel event triggered'); // Debug log
       event.preventDefault();
-      const delta = event.deltaY || event.deltaX; // Account for devices using deltaX
-      ref.scrollLeft += delta;
+      ref.scrollLeft += event.deltaY;
     }
   };
 
