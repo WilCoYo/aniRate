@@ -4,7 +4,6 @@ import '../Watchlist/Watchlist.css'
 import '../Navbar/Navbar.css'
 // import { removeFromWatchlist, auth } from '../../firebase'
 import { getWatchlistData, auth } from '../../firebase'
-import loading_gif from '../../assets/images/loading-anime.gif'
 import drop_icon from '../../assets/images/drop-down.svg'
 
 
@@ -23,7 +22,6 @@ function WeeklyWatchlist({anime}) {
     // }
 
     const [watchlist, setWatchlist] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
