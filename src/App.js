@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Home from './assets/pages/Home/Home.js'
 import { Routes, Route, useNavigate} from 'react-router-dom'
+import Home from './assets/pages/Home/Home.js'
 import Login from './assets/pages/Login/Login.js'
+import Watchlist from './assets/pages/Watchlist/Watchlist.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.js'
 import { ToastContainer } from 'react-toastify';
@@ -13,18 +14,21 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if(user) {
         console.log("Logged In")
-        navigate('/')
+        // Remove this automatic navigation
+        // navigate('/')
       } else {
         console.log("Logged Out")
         navigate('/login')
       }
       setLoading(false);
     });
+  
+    // Cleanup subscription
+    return () => unsubscribe();
   }, [navigate])
-
 
 
   return (
@@ -36,6 +40,7 @@ function App() {
         <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/login' element={<Login />} />
+            <Route path='/watchlist' element={<Watchlist />} />
              
         </Routes>
       

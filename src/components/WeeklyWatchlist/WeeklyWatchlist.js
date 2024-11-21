@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect} from 'react';
+import { useState, useEffect} from 'react'
 import './WeeklyWatchlist.css'
 import '../Navbar/Navbar.css'
 import { removeFromWatchlist } from '../../firebase'

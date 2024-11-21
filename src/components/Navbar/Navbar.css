@@ -1,3 +1,8 @@
+a {
+    color: white;
+    text-decoration: none;
+    
+}
 
 .navbar {
     width: 100%;
@@ -30,6 +35,10 @@
 
 .navbar-left li {
     cursor: pointer;
+}
+
+.navbar-left li:hover {
+    scale: 1.1;
 }
 
 .navbar-right {
