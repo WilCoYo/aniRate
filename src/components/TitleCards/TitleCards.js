@@ -12,20 +12,17 @@ import { addToWatchlist, auth} from '../../firebase'
 
 
 
-function TitleCards({anime}) {  
+function TitleCards({anime, onWatchlistUpdate}) {  
     const userId = auth.currentUser?.uid;
 
-    // if(!userId) {
-    //     console.log("User is not authenticated");
-    //     return;
-    // }
-
-    // console.log("User ID:", userId);
-    // console.log("User document ID:", "XWAYjcpZaZgk0FjXVvaqkrr3i6J3");
+   
 
     const handleAddToWatchlist = () => {
         if(userId) {
             addToWatchlist(userId, anime.mal_id);
+            if (onWatchlistUpdate) {
+                onWatchlistUpdate(anime);
+            }
         } else {
             console.log("User is not authenticated")
         }

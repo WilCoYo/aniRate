@@ -7,7 +7,7 @@
     position: fixed;
     font-size: 1rem;
     color: #e5e5e5;
-    background-image: linear-gradient(180deg, rgba(43, 43, 43, 0.705) 10%,
+    background-image: linear-gradient(180deg, rgb(43, 43, 43) 30%,
     transparent);
     z-index: 10;
 }

@@ -1,8 +1,19 @@
 .watchlist {
     position: absolute;
-    top: 0;
+    top: -.5rem;
     right: 1rem;
     width: 40rem;
+    max-height: 50rem;
+
+    overflow-y: scroll;  /* Changed back to 'scroll' */
+    overflow-: hidden;
+    white-space: nowrap;
+ 
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
     
     z-index: 3;
       /* other styles */
@@ -29,18 +40,28 @@
 
 .weekday ul {
     padding: 1rem;
+    line-height: 2rem;
 }
 
+.remove:hover {
+    scale: 1.1;
+   
+}
 .weekday p {
     padding: 1rem;
     font-size: 1rem;
 }
 
 .weekday li{
+    display: flex;
+    justify-content: space-between;
     list-style: none;
     font-size: 1rem;
     font-style: italic;
+    
 } 
+
+
 
 .watchlist-loading {
     margin: 0 auto;
@@ -54,6 +75,7 @@
     display: flex;
     font-size: 1rem;
     z-index: 11;
+    
 }
 
 .watchlist-dropdown:hover {

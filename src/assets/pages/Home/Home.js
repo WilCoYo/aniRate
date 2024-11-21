@@ -5,8 +5,9 @@ import './Home.css'
 
 import Navbar from '../../../components/Navbar/Navbar'
 import TitleCards from '../../../components/TitleCards/TitleCards';
-import WeeklyWatchlist from '../../../components/Watchlist/Watchlist'
-import Footer from '../../../components/Footer/Footer';
+import WeeklyWatchlist from '../../../components/WeeklyWatchlist/WeeklyWatchlist'
+import Footer from '../../../components/Footer/Footer'
+
 
 import hero_banner from '../../images/hero-image.jpg'
 import hero_title from '../../images/hero-image-title.png'
@@ -21,6 +22,7 @@ import info_icon from '../../images/info-icon.svg'
 
 function Home( ) {
   const [topAnime, setTopAnime] = useState([]);
+  const [watchlist, setWatchlist] = useState([]); 
  
   // const userId = auth.currentUser?.uid;
 
@@ -90,12 +92,24 @@ useEffect(() => {
 }, [topAnime, cardsRef]);
 
 
+const handleWatchlistUpdate = (anime) => {
+  setWatchlist(prevWatchlist => {
+    // Check if anime is already in watchlist to prevent duplicates
+    const isAlreadyInWatchlist = prevWatchlist.some(item => item.mal_id === anime.mal_id);
+    return isAlreadyInWatchlist 
+      ? prevWatchlist 
+      : [...prevWatchlist, anime];
+  });
+}
 
 
   return (
     <div className='home'>
       <Navbar/>
-      <WeeklyWatchlist />
+      <WeeklyWatchlist 
+        onWatchlistUpdate={handleWatchlistUpdate} 
+        watchlist={watchlist}
+      />
         <div className='hero'>
         
           <img src={hero_banner} alt='' className='banner-img' />
@@ -129,6 +143,7 @@ useEffect(() => {
               <TitleCards 
                 key={anime.mal_id}
                 anime={anime} 
+                onWatchlistUpdate={handleWatchlistUpdate}
               />
             ) : null
           ))}

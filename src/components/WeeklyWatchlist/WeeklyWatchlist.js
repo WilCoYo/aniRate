@@ -1,27 +1,31 @@
 import React from 'react'
 import { useState, useEffect} from 'react';
-import '../Watchlist/Watchlist.css'
+import './WeeklyWatchlist.css'
 import '../Navbar/Navbar.css'
-// import { removeFromWatchlist, auth } from '../../firebase'
+import { removeFromWatchlist } from '../../firebase'
 import { getWatchlistData, auth } from '../../firebase'
 import drop_icon from '../../assets/images/drop-down.svg'
+import remove_icon from '../../assets/images/remove_icon.svg'
 
 
-function WeeklyWatchlist({anime}) {
+function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     const userId = auth.currentUser?.uid;
-    
- 
+    const [watchlist, setWatchlist] = useState(propWatchlist || []);
 
-    // const handleRemoveToWatchlist = () => {
-    //     if(userId) {
-    //         removeFromWatchlist(userId, anime.mal_id);
-    //     } else {
-    //         console.log("User is not authenticated")
-    //     }
-        
-    // }
+    useEffect(() => {
+        setWatchlist(propWatchlist || []);
+    }, [propWatchlist]);
 
-    const [watchlist, setWatchlist] = useState([]);
+    const handleRemoveToWatchlist = (animeId) => {
+        if(userId) {
+            removeFromWatchlist(userId, animeId);
+            // Update local state and trigger parent component update
+            const updatedWatchlist = watchlist.filter(anime => anime.mal_id !== animeId);
+            setWatchlist(updatedWatchlist);
+        } else {
+            console.log("User is not authenticated")
+        }
+    }
 
 
     useEffect(() => {
@@ -120,16 +124,7 @@ function WeeklyWatchlist({anime}) {
 
 
 
-    // if (isLoading) {
-    //     return (
-    //         <div className='watchlist-loading'>
-    //             <h2>Loading Your Weekly Watchlist...</h2>
-    //             <p>Fetching your anime schedule...</p>
-    //             <img src={loading_gif} alt='Anime girl running' />
-    //         </div>
-    //     );
-    // }
-
+ 
 
 
 
@@ -149,7 +144,14 @@ function WeeklyWatchlist({anime}) {
                         {mondays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
+                            
                         ))}
                     </ul>
                 ) : (
@@ -164,6 +166,12 @@ function WeeklyWatchlist({anime}) {
                         {tuesdays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -179,6 +187,12 @@ function WeeklyWatchlist({anime}) {
                         {wednesdays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -193,6 +207,12 @@ function WeeklyWatchlist({anime}) {
                         {thursdays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -207,6 +227,12 @@ function WeeklyWatchlist({anime}) {
                         {fridays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -221,6 +247,12 @@ function WeeklyWatchlist({anime}) {
                         {saturdays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -235,6 +267,12 @@ function WeeklyWatchlist({anime}) {
                         {sundays.map((anime, index) => (
                             <li key={index}>
                                 {anime.title_english || anime.title}
+                                <img 
+                                    src={remove_icon} 
+                                    alt='Remove Icon' 
+                                    className='remove'
+                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                                />
                             </li>
                         ))}
                     </ul>
