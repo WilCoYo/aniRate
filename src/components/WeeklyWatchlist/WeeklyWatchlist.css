@@ -6,7 +6,7 @@
     max-height: 50rem;
 
     overflow-y: scroll;  /* Changed back to 'scroll' */
-    overflow-: hidden;
+    overflow-x: hidden;
     white-space: nowrap;
  
     -webkit-overflow-scrolling: touch;

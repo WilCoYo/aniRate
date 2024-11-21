@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect} from 'react'
 import './WeeklyWatchlist.css'
-import '../Navbar/Navbar.css'
+
 import { removeFromWatchlist } from '../../firebase'
 import { getWatchlistData, auth } from '../../firebase'
 import drop_icon from '../../assets/images/drop-down.svg'

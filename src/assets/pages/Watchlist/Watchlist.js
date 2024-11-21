@@ -125,7 +125,7 @@ function Watchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
 
   return (
     <div className="watchlist-container">
-    <img src={watchlist_background} alt='Anime background' className='banner-img' />
+    <img src={watchlist_background} alt='Anime background' className='watchlist-banner-img' />
     <h1>My Watchlist</h1>
     {watchlist.length === 0 ? (
       <p>Your watchlist is empty</p>
@@ -154,153 +154,151 @@ function Watchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
         <h2>Weekly Watchlist</h2>
       </div>
       <div className='watchlist-schedule'>
+        <div id='mondays' className='weekday'>
+            <h3>Monday</h3>
+            {mondays.length > 0 ? (
+                <ul>
+                    {mondays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                        
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
+        </div>
 
-      
-            <div id='mondays' className='weekday'>
-                <h3>Monday</h3>
-                {mondays.length > 0 ? (
-                    <ul>
-                        {mondays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                            
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
+        <div id='tuesdays' className='weekday'>
+            <h3>Tuesday</h3>
+            {tuesdays.length > 0 ? (
+                <ul>
+                    {tuesdays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
+        </div>
 
-            <div id='tuesdays' className='weekday'>
-                <h3>Tuesday</h3>
-                {tuesdays.length > 0 ? (
-                    <ul>
-                        {tuesdays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-
-            <div id='wednesdays' className='weekday'>
-                <h3>Wednesday</h3>
-                {wednesdays.length > 0 ? (
-                    <ul>
-                        {wednesdays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='thursdays' className='weekday'>
-                <h3>Thursday</h3>
-                {thursdays.length > 0 ? (
-                    <ul>
-                        {thursdays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='fridays' className='weekday'>
-                <h3>Friday</h3>
-                {fridays.length > 0 ? (
-                    <ul>
-                        {fridays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='saturdays' className='weekday'>
-                <h3>Saturday</h3>
-                {saturdays.length > 0 ? (
-                    <ul>
-                        {saturdays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='sundays' className='weekday'>
-                <h3>Sunday</h3>
-                {sundays.length > 0 ? (
-                    <ul>
-                        {sundays.map((anime, index) => (
-                            <li key={index}>
-                                {anime.title_english || anime.title}
-                                <img 
-                                    src={remove_icon} 
-                                    alt='Remove Icon' 
-                                    className='remove'
-                                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
+        <div id='wednesdays' className='weekday'>
+            <h3>Wednesday</h3>
+            {wednesdays.length > 0 ? (
+                <ul>
+                    {wednesdays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
+        </div>
+        <div id='thursdays' className='weekday'>
+            <h3>Thursday</h3>
+            {thursdays.length > 0 ? (
+                <ul>
+                    {thursdays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
+        </div>
+        <div id='fridays' className='weekday'>
+            <h3>Friday</h3>
+            {fridays.length > 0 ? (
+                <ul>
+                    {fridays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
+        </div>
+        <div id='saturdays' className='weekday'>
+            <h3>Saturday</h3>
+            {saturdays.length > 0 ? (
+                <ul>
+                    {saturdays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
+        </div>
+        <div id='sundays' className='weekday'>
+            <h3>Sunday</h3>
+            {sundays.length > 0 ? (
+                <ul>
+                    {sundays.map((anime, index) => (
+                        <li key={index}>
+                            {anime.title_english || anime.title}
+                            <img 
+                                src={remove_icon} 
+                                alt='Remove Icon' 
+                                className='remove'
+                                onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No anime scheduled this day</p>
+            )}
         </div>
       </div>
+    </div>
   </div>
   )
 }
