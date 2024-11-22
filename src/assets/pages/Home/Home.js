@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRef, useState, useEffect, useLayoutEffect} from 'react';
 
+
 import './Home.css'
 
 import Navbar from '../../../components/Navbar/Navbar'
@@ -11,7 +12,7 @@ import Footer from '../../../components/Footer/Footer'
 
 import hero_banner from '../../images/hero-image.jpg'
 import hero_title from '../../images/hero-image-title.png'
-import play_icon from '../../images/play-icon.svg'
+
 import info_icon from '../../images/info-icon.svg'
 
 // import { getWatchlist } from '../../../firebase';
@@ -20,7 +21,7 @@ import info_icon from '../../images/info-icon.svg'
 
 
 
-function Home( ) {
+function Home({anime, onWatchlistUpdate} ) {
   const [topAnime, setTopAnime] = useState([]);
   const [watchlist, setWatchlist] = useState([]); 
  
@@ -103,6 +104,7 @@ const handleWatchlistUpdate = (anime) => {
 }
 
 
+
   return (
     <div className='home'>
       <Navbar/>
@@ -125,8 +127,9 @@ const handleWatchlistUpdate = (anime) => {
             teammates in high school.
             </p>
             <div className="hero-btns">
-               <button className='btn'><img src={play_icon} alt=''/>Play</button> {/*Add an 'addtowatchlist' function button */}
-              <button className='btn dark-btn'><img src={info_icon} alt=''/>More Info</button>
+              <button className='btn dark-btn'><img src={info_icon} alt=''/>
+                More Info
+              </button>
             </div>
           </div>
           

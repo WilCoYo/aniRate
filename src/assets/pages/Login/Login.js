@@ -23,11 +23,12 @@ function Login() {
       } else {
         await signup(name, email, password);
       }
+      setLoading(false); // Ensure loading stops after successful auth
     } catch (error) {
       console.error("Authentication error:", error);
       setLoading(false);
     }
-  }
+  };
 
   return (
     loading?<div className='login-gif'>

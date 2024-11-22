@@ -6,54 +6,77 @@ import gojo from '../../assets/images/gojo-cat-logo.png'
 // import bell_icon from '../../assets/images/bell-icon.svg'
 import profile_icon from'../../assets/images/profile-icon.svg'
 import drop_icon from'../../assets/images/drop-down.svg'
-import { logout, auth } from '../../firebase'
+import { logout} from '../../firebase'
 
 
 function Navbar() {
   const navigate = useNavigate();
 
-  const navigateToWatchlist = () => {
-    console.log('Current user:', auth.currentUser);
-    console.log('Attempting to navigate to watchlist');
-    navigate('/watchlist'); 
-  };
 
   return (
-    <div className='navbar'>
+    <div className="navbar">
       <div className="navbar-left">
-        <img src={gojo} alt='' className='gojo'/>
+        <img src={gojo} alt="" className="gojo" />
         <ul>
           <li>
-            <a href="/" onClick={(e) => {
-              e.preventDefault();
-              navigate('/');
-              }}>Home
-            </a>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/');
+              }}
+            >
+              Home
+            </button>
           </li>
           <li>New & Popular</li>
           <li>
-            <a href="/watchlist" onClick={(e) => {
-              e.preventDefault();
-              navigateToWatchlist();
-              }}>My Watchlist
-            </a>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/watchlist');
+              }}
+            >
+              My Watchlist
+            </button>
           </li>
-          <li>Browse all Anime</li>
+          <li>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/browse');
+              }}
+            >
+              Browse all Anime
+            </button>
+          </li>
         </ul>
       </div>
       <div className="navbar-right">
-       
-    
-          <div className="navbar-profile">
-            <img src={profile_icon} alt='Human Shaped Icon' className='profile'/>
-            <img src={drop_icon} alt='Downward arrow' className="dropdown-arrow"/>
-            <div className="dropdown slide-bottom">
-              <p onClick={() => {logout()}} >Sign Out</p>
-            </div>
+        <div className="navbar-profile">
+          <img
+            src={profile_icon}
+            alt="Human Shaped Icon"
+            className="profile"
+          />
+          <img
+            src={drop_icon}
+            alt="Downward arrow"
+            className="dropdown-arrow"
+          />
+          <div className="dropdown slide-bottom">
+            <p
+              onClick={() => {
+                logout();
+              }}
+            >
+              Sign Out
+            </p>
           </div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
+
 
 export default Navbar

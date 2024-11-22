@@ -90,6 +90,17 @@ a {
     cursor: pointer;
 }
 
+button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: inherit;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
 @-webkit-keyframes slide-bottom {
     0% {
       -webkit-transform: translateY(0);
