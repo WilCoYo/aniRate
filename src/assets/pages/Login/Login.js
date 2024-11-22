@@ -17,14 +17,17 @@ function Login() {
   const user_auth = async (event) => {
     event.preventDefault();
     setLoading(true);
-    if (signState === "Sign In") {
-        await login(email, password)
-    } else {
-      await signup(name, email, password);
+    try {
+      if (signState === "Sign In") {
+        await login(email, password);
+      } else {
+        await signup(name, email, password);
+      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      setLoading(false);
     }
-    setLoading(false);
   }
-
 
   return (
     loading?<div className='login-gif'>
