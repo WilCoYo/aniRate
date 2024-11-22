@@ -1,28 +1,54 @@
 .watchlist-banner-img {
     position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
     min-height: 100vh;
     min-width: 100%;
-    mask-image: linear-gradient(to right, transparent, black 75%);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 75%);
+    object-fit: cover;
+    mask-image: linear-gradient(to right, black 25%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, black 25%, black 100%);
+    display: flex;
     overflow: hidden;
 }
 
                                     /* Watchlist Grid */
 
 
+
+.watchlist-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+
+    display: flex;
+    padding-top: 8rem;
+    padding-bottom: 1rem;
+}
+
 .watchlist-container h1 {
-    width: 15%;
     text-align: center;
     margin-left: 3rem;
     padding-top: 1rem;
+    opacity: .9;
 }
 
-.watchlist-grid {
-    width: 15%;
-    margin: 1rem 1rem 1rem 3rem;
-    display: flex;
-    flex-direction: column;
+.watchlist-preview-scroll  {
+    overflow-y: auto; /* Allow scrolling within this container */
+    max-height: none;
+    height: auto;
+}
 
+
+.watchlist-grid {
+    margin: 0 1rem;
+    display: grid;
+    grid-template-columns: 15rem 15rem;
+    max-height: none;
+    height: auto;
+    overflow-y: scroll;
 
     /* other styles */
     background: rgba(39, 39, 39, 0.75);
@@ -31,6 +57,17 @@
     -webkit-backdrop-filter: blur(60px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0px 0px 5px grey;
+    padding-top: 1rem;
+
+     /* Add smooth scrolling */
+     scroll-behavior: smooth;
+    
+     /* Improve scrolling performance */
+     overscroll-behavior-y: contain;
+}
+
+.watchlist-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .watchlist-grid h2 {
@@ -42,8 +79,6 @@
     justify-content: start;
     align-items: center;
     flex-direction: column;
-    gap: .5rem;
-    padding: 1rem;
 }
 
 .watchlist-item img {
@@ -62,37 +97,61 @@
                                     /* Watchlist Schedule */
 
 .watchlist-schedule-container {
-    position: fixed;
-    top: 2.75rem;
-    right: 2rem;
-    width: 80%;
-  
+    overflow-y: auto; /* Allow individual scrolling */
+    max-height: none;
+    height: auto;
+ 
  }
 
 
 .watchlist-schedule {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: auto;
-        /* other styles */
-        background: rgba(39, 39, 39, 0.75);
-        backdrop-filter: blur(10px);
-         /* fallback for old browsers */
-        -webkit-backdrop-filter: blur(60px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0px 0px 5px grey;
+    display: flex;
+    flex-direction: column;
+    max-height: none; /* Limit height and enable scrolling */
+    height: auto;
+    overflow-y: auto;
+
+    /* Keep existing background and styling */
+    background: rgba(39, 39, 39, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(60px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 0px 5px grey;
     
+     /* Add smooth scrolling */
+     scroll-behavior: smooth;
+    
+     /* Improve scrolling performance */
+     overscroll-behavior-y: contain;
 }
 
-.watchlist-schedule-header {
-    text-align: center;
+.watchlist-schedule h3 {
+    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.2);
 }
+
+.watchlist-schedule ul {
+    background: rgba(39, 39, 39, 0.37);
+}
+
+.watchlist-schedule p {
+    background: rgba(39, 39, 39, 0.37);
+}
+
+.watchlist-schedule::-webkit-scrollbar {
+    display: none;
+}
+
 
 .weekday {
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* border: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 .weekday li {
     padding: .5rem 0rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+.remove:hover {
+    cursor: pointer;
+}
+

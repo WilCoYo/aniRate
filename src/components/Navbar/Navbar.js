@@ -23,7 +23,13 @@ function Navbar() {
       <div className="navbar-left">
         <img src={gojo} alt='' className='gojo'/>
         <ul>
-          <li>Home</li>
+          <li>
+            <a href="/" onClick={(e) => {
+              e.preventDefault();
+              navigate('/');
+              }}>Home
+            </a>
+          </li>
           <li>New & Popular</li>
           <li>
             <a href="/watchlist" onClick={(e) => {
