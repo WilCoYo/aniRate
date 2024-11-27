@@ -44,10 +44,15 @@
    
 }
 
+.filter-searchbar-list li:hover {
+    cursor: pointer;
+    scale: 1.1;
+}
+
 .results-grid-container {
-    height: 90vh;
-    padding: 5rem 1rem 1rem 0rem ;
-    margin-left: auto;
+    height: auto;
+    padding: 5rem 1rem 5rem 15rem;
+    margin: 0 auto;
     
 }
 
@@ -58,14 +63,40 @@
 }
 
 .results-list {
-    display: grid;
-    grid-template-columns: repeat(6, auto);
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 1rem; 
+    padding: 2rem 0; 
+    margin: 0 auto; 
     width: 100%;
-    gap: 1rem;
-    padding-top: 2rem;
-    padding-bottom: 1rem;
+    justify-content: center; 
+    overflow: visible; 
     
 }
+
+.pagination-controls {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1rem; 
+  }
+  
+  .pagination-controls button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+
 /* 
 * {
     outline: 1px solid red;
