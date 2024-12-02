@@ -4,6 +4,7 @@ import Home from './assets/pages/Home/Home.js'
 import Login from './assets/pages/Login/Login.js'
 import Watchlist from './assets/pages/Watchlist/Watchlist.js'
 import Browse from './assets/pages/Browse/Browse.js'
+import Info from './assets/pages/Info/Info.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.js'
 import { ToastContainer } from 'react-toastify';
@@ -50,7 +51,8 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/watchlist' element={<Watchlist />} />
             <Route path='/browse' element={<Browse />} />
-             
+            <Route path='/info' element={<Info />} />
+            
         </Routes>
       
     </div>

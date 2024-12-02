@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate} from 'react-router-dom'
 import './TitleCards.css'
 import info_icon from '../../assets/images/info-icon.svg'
 import add_icon from '../../assets/images/add-icon.svg'
@@ -14,6 +15,7 @@ import { addToWatchlist, auth} from '../../firebase'
 
 function TitleCards({anime, onWatchlistUpdate}) {  
     const userId = auth.currentUser?.uid;
+    const navigate = useNavigate();
 
    
 
@@ -68,15 +70,14 @@ function TitleCards({anime, onWatchlistUpdate}) {
                             <img src={add_icon} alt=''/>Add to watchlist
                         </button> 
 
-                        <button className='titlecard-btn-rt btn'>
-                        <a href={anime.url} 
-                            target='_blank' 
-                            rel='noreferrer'
-                            className='btn-content'
-                            
+                        <button 
+                            className='titlecard-btn-rt btn'
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/info', {state: { anime }}); //passing anime to Info 
+                            }}
                         >
                             <img src={info_icon} alt=''/>More Info
-                        </a>
                         </button>
 
                     </div>
