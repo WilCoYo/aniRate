@@ -27,8 +27,7 @@ function Navbar() {
             >
               Home
             </button>
-          </li>
-          <li>New & Popular</li>
+          </li> 
           <li>
             <button
               onClick={(e) => {

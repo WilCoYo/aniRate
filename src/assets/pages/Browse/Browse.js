@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import TitleCards from '../../../components/TitleCards/TitleCards';
 import Navbar from '../../../components/Navbar/Navbar';
 import browse_background from '../../images/browse-background.jpg'
+import search_icon from '../../images/search-icon.svg'
+
 import './Browse.css'
 
 
@@ -17,61 +19,94 @@ const [page, setPage] = useState(1);
 const [totalPages, setTotalPages] = useState(null);
 
 
+const [searchTerm, setSearchTerm] = useState('');
+const [currentSearch, setCurrentSearch] = useState('');
+
+const baseUrls = {
+  top: 'https://api.jikan.moe/v4/anime?q=&type=tv&order_by=score&sort=desc',
+  all: 'https://api.jikan.moe/v4/anime?q=&type=tv&order_by=title&sort=asc',
+  upcoming: 'https://api.jikan.moe/v4/anime?q=&type=tv&status=upcoming&sort=desc',
+};
 
 
 
 
-
-  const fetchAnime = async (url, page = 1) => {
-    try {
-      const response = await fetch(`${url}&page=${page}`);
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`);
-      }
-      const data = await response.json();
-      setAnimeList((prevList) => [...prevList, ...data.data]);
-      setTotalPages(data.pagination.last_visible_page);
-    } catch (err) {
-      setError(err.message);
+const fetchAnime = async (url, page = 1, search = '') => {
+  try {
+    const searchQuery = search ? `&q=${encodeURIComponent(search)}` : '';
+    const response = await fetch(`${url}${searchQuery}&page=${page}`);
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
-  };
- 
-  const baseUrls = {
-    top: 'https://api.jikan.moe/v4/anime?q=&type=tv&order_by=score&sort=desc',
-    all: 'https://api.jikan.moe/v4/anime?q=&type=tv&order_by=title&sort=asc',
-    upcoming: 'https://api.jikan.moe/v4/anime?q=&type=tv&status=upcoming&sort=desc',
-  };
-
-
-  useEffect(() => {
-    const url = baseUrls[filter];
-    setAnimeList([]); 
-    setPage(1); 
-    fetchAnime(url, 1); 
-    // eslint-disable-next-line
-  }, [filter]);
-
-
-  const handleLoadMore = () => {
-    const url = baseUrls[filter];
-    const nextPage = page + 1;
-    setPage(nextPage);
-    fetchAnime(url, nextPage);
-  };
-
-
-
-  if (error) {
-    return <div>Error fetching data: {error}</div>;
+    const data = await response.json();
+    setAnimeList((prevList) => [...prevList, ...data.data]);
+    setTotalPages(data.pagination.last_visible_page);
+  } catch (err) {
+    setError(err.message);
   }
+};
+ 
+ 
 
+useEffect(() => {
+  const url = baseUrls[filter];
+  setAnimeList([]); 
+  setPage(1); 
+  fetchAnime(url, 1, currentSearch); 
+  // eslint-disable-next-line
+}, [filter, currentSearch]);
+
+
+const handleSearch = () => {
+  setCurrentSearch(searchTerm);
+  setAnimeList([]);
+  setPage(1);
+};
+
+const handleKeyDown = event => {
+  if(event.key === 'Enter') {
+    handleSearch();
+  }
+}
+
+
+const handleLoadMore = () => {
+  const url = baseUrls[filter];
+  const nextPage = page + 1;
+  setPage(nextPage);
+  fetchAnime(url, nextPage, currentSearch);
+};
+
+
+
+if (error) {
+  return <div>Error fetching data: {error}</div>;
+}
+
+  
 
 
 
   return (
     <>
     <Navbar />
-    <img src={browse_background} alt='Cat with bandana' className='browse-background'/>
+    <div className='searchBar'>
+    <input
+        className='animeTextSearch'
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Search for Anime"
+      />
+      <button
+        onClick={handleSearch}
+        className='searchBtn'
+      >
+        <img src={search_icon} alt='magnifying glass' />
+      </button>
+    </div>
+      <img src={browse_background} alt='Cat with bandana' className='browse-background'/>
         <div className='browse-component'>
             
 

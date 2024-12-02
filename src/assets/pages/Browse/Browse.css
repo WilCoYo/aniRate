@@ -1,3 +1,38 @@
+.searchBar {
+    position: absolute;
+    top: 4rem;
+    right: 13rem;
+    z-index: 11;
+}
+
+.animeTextSearch {
+  
+    width: 20rem;
+    color: white;
+    font-family: 'poppins';
+    padding: .5rem;
+    border-radius: 5rem;
+
+      /* other styles */
+      background: rgba(39, 39, 39, 0.40);
+      backdrop-filter: blur(10px);
+      box-shadow: 0px 0px 5px grey;
+      /* fallback for old browsers */
+      -webkit-backdrop-filter: blur(60px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.searchBtn {
+    position: absolute;
+    top: .5rem;
+    right: 1rem;
+    z-index: 12;
+}
+
+.searchBtn:hover {
+    scale: 1.1;
+}
+
 .browse-background {
     position: fixed;
     top: 0;
@@ -51,7 +86,7 @@
 
 .results-grid-container {
     height: auto;
-    padding: 5rem 1rem 5rem 15rem;
+    padding: 7rem 1rem 5rem 15rem;
     margin: 0 auto;
     
 }
