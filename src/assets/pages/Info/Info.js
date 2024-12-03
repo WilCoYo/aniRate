@@ -1,10 +1,10 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
-
 import Navbar from '../../../components/Navbar/Navbar';
 
 import './Info.css'
 import add_icon from '../../images/add-icon.svg'
+import info_background from '../../images/info-background.jpg'
 
 import { addToWatchlist, auth} from '../../../firebase'
 
@@ -33,9 +33,14 @@ function Info({onWatchlistUpdate}) {
     }
 
 
+    
+
+
+
 return (
 <>
 <Navbar />
+<img src={info_background} alt='kakashi reading' className='info-background'/>
 <div className='info-section'>
     
     <div className='anime'>
@@ -54,11 +59,14 @@ return (
                 <ul>
                     <li>Rating: {anime.score}</li>
                     <li>Status: {anime.status}</li>
-                    <li>Episodes: {anime.episodes}</li>
+                    
+                    <li>
+                        {anime.episodes != null ? `Episodes: ${anime.episodes}` : ''}
+                    </li>
                     <li>Aired from: {anime.aired.string}</li>
                     
                     <li>Genres: {anime.genres.map((genre) => genre.name).join(', ')}</li> {/* pulling from array in API */}
-                    <li></li>
+                    <li className='trailer'><a href={anime.trailer.url}>Trailer</a> </li>
                     <li></li>
                 </ul>
             </div>
