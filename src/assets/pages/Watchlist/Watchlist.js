@@ -5,7 +5,7 @@ import { removeFromWatchlist } from '../../../firebase'
 import { getWatchlistData, auth } from '../../../firebase'
 // import drop_icon from '../../../assets/images/drop-down.svg'
 import remove_icon from '../../../assets/images/remove_icon.svg'
-import watchlist_background from '../../images/watchlist_background.png'
+import watchlist_background from '../../images/haikyuu-budha-background.jpg'
 import Navbar from '../../../components/Navbar/Navbar'
 import loading_gif from '../../images/loading-anime.gif'
 

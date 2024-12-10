@@ -13,7 +13,7 @@ a {
     position: absolute;
     font-size: 1rem;
     color: #e5e5e5;
-    background-image: linear-gradient(180deg, rgb(43, 43, 43) 30%,
+    background-image: linear-gradient(180deg, #979EE3 25%,
     transparent);
     z-index: 10;
 }
@@ -42,6 +42,12 @@ a {
     cursor: pointer;
 }
 
+.navbar-left li button {
+    color: #Fff;
+    font-weight: bold;
+    text-shadow: 0 0 5px #000;
+}
+
 .navbar-left li:hover {
     scale: 1.1;
 }
@@ -49,6 +55,7 @@ a {
 .navbar-right {
     display: flex;
     align-items: center;
+    
 }
 
 .navbar-right .icons {
@@ -94,6 +101,7 @@ a {
     font-size: 1rem;
     cursor: pointer;
 }
+
 
 button {
     background: none;
