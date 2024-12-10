@@ -2,18 +2,64 @@
     height: 100vh;
     background-color: white;
     text-align: center;
-    background: url('../../images/login-background.jpg');
+    background: url('../../images/dandadan-background.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
 }
+
+.login-title {
+    display: flex;
+    justify-content: center;
+   
+}
+
+.login-title h1 {
+    color: #F26B83;
+}
+
+.text-focus-in {
+	-webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+
+@-webkit-keyframes text-focus-in {
+    0% {
+      -webkit-filter: blur(12px);
+              filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-filter: blur(0px);
+              filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  @keyframes text-focus-in {
+    0% {
+      -webkit-filter: blur(12px);
+              filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-filter: blur(0px);
+              filter: blur(0px);
+      opacity: 1;
+    }
+  }
 
 
 .login-form {
     width: 100%;
     max-width: 450px;
-    background: rgba(0,0,0,0.75);
-    margin: auto;
+    background: rgba(0,0,0,0.90);
     padding: 2rem 1rem;
 }
 
@@ -49,7 +95,7 @@
     border: 0;
     outline: 0;
     padding: 1rem;
-    background: #e50914;
+    background: #F24405;
     color: white;
     border-radius: .25rem;
     font-size: 1rem;

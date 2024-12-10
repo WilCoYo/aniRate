@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './Login.css'
-import logo from '../../images/gojo-cat-logo.png'
 import { login, signup } from '../../../firebase';
 import loading_gif from '../../images/loading-anime.gif';
 // import { getFirestore } from 'firebase/firestore';
@@ -35,8 +34,12 @@ function Login() {
       <img src={loading_gif} alt='Anime girl running' />
     </div>:
     <div className='login'>
-      <img src={logo} alt='AniRate Logo' className='login-logo' />
+      
+      
       <div className='login-form'>
+        <div className='login-title'>
+          <h1>Anime<strong className='text-focus-in'>Pulse</strong></h1>
+        </div>
         <h1>{signState}</h1>
         <form>
             {signState === "Sign Up" ? <input value={name} onChange={(e) => {setName(e.target.value)}}  
@@ -63,7 +66,7 @@ function Login() {
 
         <div className='form-switch'>
           {signState === "Sign In" 
-          ?<p>New to AniRate? <span onClick={() => {setSignState("Sign Up")}}>Sign Up Now</span></p>
+          ?<p>New to AnimePulse? <span onClick={() => {setSignState("Sign Up")}}>Sign Up Now</span></p>
           :<p>Already have account? <span onClick={() => {setSignState("Sign In")}}>Sign In Now</span></p>
         }
         </div>
