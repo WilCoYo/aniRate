@@ -4,7 +4,6 @@ import './WeeklyWatchlist.css'
 
 import { removeFromWatchlist } from '../../firebase'
 import { getWatchlistData, auth } from '../../firebase'
-import drop_icon from '../../assets/images/drop-down.svg'
 import remove_icon from '../../assets/images/remove_icon.svg'
 
 
@@ -131,8 +130,7 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     return (
         <>
         <div className='watchlist-dropdown'>
-            <p>Watchlist</p>
-            <img src={drop_icon} alt='Downward arrow' className="dropdown-arrow"/>
+            
 
             <div className='watchlist slide-bottom '>
            

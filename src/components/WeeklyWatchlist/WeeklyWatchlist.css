@@ -1,7 +1,5 @@
 .watchlist {
-    position: absolute;
-    top: -.5rem;
-    right: 1rem;
+   
     width: 40rem;
     max-height: 50rem;
 
@@ -23,7 +21,6 @@
       -webkit-backdrop-filter: blur(60px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     
-      display: none;
 }
 
 .watchlist h2 {
@@ -69,7 +66,7 @@
 }
 
 .watchlist-dropdown {
-    position: fixed;
+    position: absolute;
     top: 4.25rem;
     right: 12rem;
     display: flex;

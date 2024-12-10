@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate} from 'react-router-dom'
 import './Navbar.css'
-import gojo from '../../assets/images/gojo-cat-logo.png'
 // import search_icon from '../../assets/images/search-icon.svg'
 // import bell_icon from '../../assets/images/bell-icon.svg'
 import profile_icon from'../../assets/images/profile-icon.svg'
@@ -16,7 +15,9 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <img src={gojo} alt="" className="gojo" />
+        <div className='navbar-logo'>
+          <h1>Anime<strong className='pulse'>Pulse</strong></h1>
+        </div>
         <ul>
           <li>
             <button

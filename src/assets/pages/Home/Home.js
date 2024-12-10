@@ -7,7 +7,7 @@ import './Home.css'
 import Navbar from '../../../components/Navbar/Navbar'
 import TitleCards from '../../../components/TitleCards/TitleCards';
 import WeeklyWatchlist from '../../../components/WeeklyWatchlist/WeeklyWatchlist'
-import Footer from '../../../components/Footer/Footer'
+// import Footer from '../../../components/Footer/Footer'
 
 
 import hero_banner from '../../images/hero-image.jpg'
@@ -138,7 +138,7 @@ const handleWatchlistUpdate = (anime) => {
 
 
         <div className="popular-section">
-          <h3>Top Anime</h3> 
+          <h3>Popular Airing Anime</h3> 
           {topAnime.length > 0 ? (
         <div className="popular-list" ref={cardsRef}>
           {topAnime.map((anime) => (
@@ -154,7 +154,7 @@ const handleWatchlistUpdate = (anime) => {
           ) : (
             <p>Loading top anime...</p>
           )}
-            <Footer />
+            {/* <Footer /> */}
         </div>
 
         
