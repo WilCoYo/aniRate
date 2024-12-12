@@ -48,26 +48,38 @@ function TitleCards({anime, onWatchlistUpdate}) {
         <div className='anime-card'>
             <div className='card-list'>
                 
-                    <figure>
+                    <div className='anime-image'>
+                        {anime.broadcast.string === 'unknown' ? (
+                            <div className='anime-card-date-time'>
+                                <h3>Broadcast Info Unknown</h3>
+                            </div>  
+                        ) :
+                            <div className='anime-card-date-time'>
+                                <h3>{ anime.broadcast.string}</h3>
+                            </div>
+
+                        }
+                       
                         <img
-                            className='anime-image'
+                            
                             src={anime.images.jpg.image_url} 
                             alt='Anime Cover Art'
                         />
+                        <div className='anime-card-caption'>
+                            <h3>{ anime.title_english || anime.title }</h3>
+                        </div>
                     
-                    </figure>
-
-                    <div className='anime-card-caption'>
-                        <h3>{ anime.title_english || anime.title }</h3>
                     </div>
+
+                   
                     
                     
                     <div className='titlecard-btns'>
                         
-                        <button className='titlecard-btn-lft btn btn-content'
+                        <button className='titlecard-btn-lft btn'
                                 onClick={handleAddToWatchlist}
                         >
-                            <img src={add_icon} alt=''/>Add to watchlist
+                            <img src={add_icon} alt=''/>
                         </button> 
 
                         <button 
@@ -77,7 +89,7 @@ function TitleCards({anime, onWatchlistUpdate}) {
                                 navigate('/info', {state: { anime }}); //passing anime to Info 
                             }}
                         >
-                            <img src={info_icon} alt=''/>More Info
+                            <img src={info_icon} alt=''/>
                         </button>
 
                     </div>
