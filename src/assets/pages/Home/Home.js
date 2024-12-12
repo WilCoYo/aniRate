@@ -20,6 +20,9 @@ import hero_banner from '../../images/hero-image.jpg'
 
 function Home({anime, onWatchlistUpdate} ) {
   const [topAnime, setTopAnime] = useState([]);
+
+  const [randomNews, setRandomNews] = useState([]);
+  const [newsData, setNewsData] = useState([]);
   // const [watchlist, setWatchlist] = useState([]); 
  
   // const userId = auth.currentUser?.uid;
@@ -102,44 +105,83 @@ useEffect(() => {
 
 
 
-  return (
-    <div className='home'>
-      <Navbar/>
-     
-        <div className='hero'>
-        
-          <img src={hero_banner} alt='' className='banner-img' />
-        
+const getRandomNews = (topAnime) => {
+  if(!topAnime.length) return '';
+  const randomIndex = Math.floor(Math.random() * topAnime.length);
+  const randomTopAnime = topAnime[randomIndex];
+  return `https://api.jikan.moe/v4/anime/${randomTopAnime.mal_id}/news`;
+ 
+};
 
-          <div className="popular-section">
-              <h3>Fall Anime</h3> 
-              {topAnime.length > 0 ? (
-            <div className="popular-list" ref={cardsRef}>
-              {topAnime.map((anime) => (
-                anime && anime.mal_id ? (
-                  <TitleCards 
-                    key={anime.mal_id}
-                    anime={anime} 
-                  />
-                ) : null
-              ))}
-            </div>
-              ) : (
-            <p>Loading top anime...</p>
-              )}
-          
+useEffect(() => {
+  if(topAnime.length > 0) {
+    setRandomNews(getRandomNews(topAnime));
+  }
+}, [topAnime]);
+
+
+useEffect(() => {
+  const fetchNews = async () => {
+    if(!randomNews) return;
+
+    try{
+      const response = await fetch(randomNews);
+      if(!response.ok) {
+        throw new Error(`Failed to fetch news: ${response.statusText}`)
+      }
+      const data = await response.json();
+      console.log('Fetched news data:', data);
+      setNewsData(data.data);
+    } catch(error) {
+      console.error('Error fetching news:', error);
+      setNewsData(null);
+    }
+  };
+  fetchNews();
+}, [randomNews])
+
+return (
+  <div className='home'>
+    <Navbar />
+    <div className='hero'>
+      <img src={hero_banner} alt='' className='banner-img' />
+      <div className='anime-news'>
+        <h3>Anime<strong className='pulse'>News</strong></h3>
+        {newsData && newsData.length > 0 ? (
+          <div className='anime-news-list'>
+            {newsData.map((news, index) => (
+              <div id='anime-news-list-element'>
+                <img src={news.images.jpg.image_url} alt='Anime poster images'className='anime-news-imgs'/>
+                <h4 key={index} id='anime-news-title'> 
+                  <a href={news.url} target="_blank" rel="noopener noreferrer">
+                    {news.title}
+                  </a>
+                </h4>
+                
+              </div>
+            ))}
           </div>
-          
-        </div>
-        
-
-
-       
-
-        
-
+        ) : (
+          <p>Fetching anime news...</p>
+        )}
+      </div>
+      <div className="popular-section">
+        <h3><strong className='pulse'>Fall</strong>Anime</h3>
+        {topAnime.length > 0 ? (
+          <div className="popular-list" ref={cardsRef}>
+            {topAnime.map((anime) => (
+              anime && anime.mal_id ? (
+                <TitleCards key={anime.mal_id} anime={anime} />
+              ) : null
+            ))}
+          </div>
+        ) : (
+          <p>Loading top anime...</p>
+        )}
+      </div>
     </div>
-  )
+  </div>
+);
 }
 
 export default Home

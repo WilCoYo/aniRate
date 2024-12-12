@@ -39,7 +39,7 @@ function TitleCards({anime, onWatchlistUpdate}) {
     //     }
     // }
 
-
+    
 
 
 
@@ -51,11 +51,11 @@ function TitleCards({anime, onWatchlistUpdate}) {
                     <div className='anime-image'>
                         {anime.broadcast.string === 'unknown' ? (
                             <div className='anime-card-date-time'>
-                                <h3>Broadcast Info Unknown</h3>
+                                <h4>Broadcast Info Unknown</h4>
                             </div>  
                         ) :
                             <div className='anime-card-date-time'>
-                                <h3>{ anime.broadcast.string}</h3>
+                                <h4>{ anime.broadcast.string}</h4>
                             </div>
 
                         }
@@ -66,7 +66,7 @@ function TitleCards({anime, onWatchlistUpdate}) {
                             alt='Anime Cover Art'
                         />
                         <div className='anime-card-caption'>
-                            <h3>{ anime.title_english || anime.title }</h3>
+                            <h4>{ anime.title_english || anime.title }</h4>
                         </div>
                     
                     </div>
