@@ -18,13 +18,14 @@ const [randomNews, setRandomNews] = useState(null);
     }
   }, [seasonalAnime]);
 
-
+// eslint-disable-next-line
   const fetchData = useCallback(async (url) => {
     const response = await fetch(url);
     if(!response.ok) {
       throw new Error(`API Error: ${response.status} ${response.statusText}`)
     }
     return response.json();
+     // eslint-disable-next-line
   })
   
   
@@ -49,6 +50,7 @@ const [randomNews, setRandomNews] = useState(null);
       }
     };
     fetchNews();
+    // eslint-disable-next-line
   }, [randomNews])
 
   if(loading) return <p >Fetching Anime News...</p>
