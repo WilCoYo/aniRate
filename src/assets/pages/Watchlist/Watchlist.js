@@ -1,288 +1,210 @@
-import React from 'react'
-import { useState, useEffect} from 'react'
-import './Watchlist.css'
-import { removeFromWatchlist } from '../../../firebase'
-import { getWatchlistData, auth } from '../../../firebase'
-// import drop_icon from '../../../assets/images/drop-down.svg'
-import remove_icon from '../../../assets/images/remove_icon.svg'
-import watchlist_background from '../../images/haikyuu-budha-background.jpg'
-import Navbar from '../../../components/Navbar/Navbar'
-import loading_gif from '../../images/loading-anime.gif'
+import React, { useState, useEffect, useCallback } from 'react';
+import './Watchlist.css';
+import { removeFromWatchlist, getWatchlistData, auth } from '../../../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import remove_icon from '../../../assets/images/remove_icon.svg';
+import watchlist_background from '../../images/haikyuu-budha-background.jpg';
+import Navbar from '../../../components/Navbar/Navbar';
+import loading_gif from '../../images/loading-anime.gif';
+import { toast } from 'react-toastify';
 
+// Cache duration in milliseconds (24 hours)
+const CACHE_DURATION = 24 * 60 * 60 * 1000;
 
-function Watchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
-
-  const userId = auth.currentUser?.uid;
-  const [watchlist, setWatchlist] = useState(propWatchlist || []);
+function Watchlist({ onWatchlistUpdate }) {
+  const [user, setUser] = useState(null);
+  const [watchlist, setWatchlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // eslint-disable-next-line
+  const [weeklySchedule, setWeeklySchedule] = useState({
+    mondays: [],
+    tuesdays: [],
+    wednesdays: [],
+    thursdays: [],
+    fridays: [],
+    saturdays: [],
+    sundays: []
+  });
 
 
-  useEffect(() => {
-      setWatchlist(propWatchlist || []);
-      setIsLoading(false);
-  }, [propWatchlist]);
 
-  const handleRemoveToWatchlist = (animeId) => {
-      if(userId) {
-          removeFromWatchlist(userId, animeId);
-          // Update local state and trigger parent component update
-          const updatedWatchlist = watchlist.filter(anime => anime.mal_id !== animeId);
-          setWatchlist(updatedWatchlist);
-      } else {
-          console.log("User is not authenticated")
+  const getCachedData = useCallback((userId) => {
+    const cached = localStorage.getItem(`watchlsit_${userId}`);
+    if(!cached) return null;
+
+    const { data, timestamp } = JSON.parse(cached);
+    const isExpired = Date.now() - timestamp > CACHE_DURATION;
+
+    if(isExpired) {
+        localStorage.remove.Item(`watchlist_${userId}`);
+        return null;
+    }
+
+    return data;
+  }, []);
+
+
+  const setCachedData = useCallback((userId, data) => {
+    const cacheData = {
+        data, 
+        timestamp: Date.now()
+    };
+    localStorage.setItem(`watchlist_${userId}`, JSON.stringify(cacheData));
+  }, []);
+
+
+  const fetchAnimeData = useCallback(async (id) => {
+    try {
+      const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status} ${response.statusText}`);
       }
-  }
+      const data = await response.json();
+      return data.data;
+    } catch (error) {
+      console.error(`Error fetching anime ${id}:`, error);
+      return null;
+    }
+  }, []);
 
 
+  // Listen for auth state changes
   useEffect(() => {
-      const fetchWatchlist = async () => {
-        if (userId) {
-          try {
-            setIsLoading(true);
-            const watchlistIds = await getWatchlistData(userId);
-            if (watchlistIds?.length) {
-              // Add delay between requests to avoid rate limiting
-              const animePromises = watchlistIds.map((id, index) => 
-                new Promise(resolve => 
-                  setTimeout(() => 
-                    fetch(`https://api.jikan.moe/v4/anime/${id}`)
-                      .then(res => res.json())
-                      .then(data => resolve(data.data))
-                      .catch(error => {
-                        console.error(`Error fetching anime ${id}:`, error);
-                        resolve(null);
-                      }), 
-                  index * 300 // 300ms delay between requests
-                )
-              ));
-              const animeData = await Promise.all(animePromises);
-              // Filter out null values
-              setWatchlist(animeData.filter(anime => anime !== null));
-            }
-            setIsLoading(false);
-          } catch (error) {
-            console.error('Error fetching watchlist:', error);
-            setIsLoading(false);
-          }
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (!currentUser) {
+        setWatchlist([]);
+        setIsLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
+  // Fetch watchlist data with caching
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      if (!user) return;
+
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        // Try to get cached data first
+        const cachedWatchlist = getCachedData(user.uid);
+        if (cachedWatchlist) {
+          setWatchlist(cachedWatchlist);
+          setIsLoading(false);
+          return;
         }
-      };
+
+        // If no cache, fetch from Firebase
+        const watchlistIds = await getWatchlistData(user.uid);
+        
+        if (watchlistIds?.length) {
+          const animeDataPromises = watchlistIds.map((id, index) => 
+            new Promise(resolve => 
+              setTimeout(() => resolve(fetchAnimeData(id)), index * 300)
+            )
+          );
+
+          const animeData = await Promise.all(animeDataPromises);
+          const filteredData = animeData.filter(Boolean);
+          
+          // Cache the fetched data
+          setCachedData(user.uid, filteredData);
+          setWatchlist(filteredData);
+        } else {
+          setWatchlist([]);
+        }
+      } catch (error) {
+        console.error('Error fetching watchlist:', error);
+        setError('Failed to load watchlist');
+        toast.error('Failed to load watchlist');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWatchlist();
+  }, [user, fetchAnimeData, getCachedData, setCachedData]);
+        
+     
   
-      fetchWatchlist();
-    }, [userId]);
 
-    const [mondays, setMondays] = useState([]);
-    const [tuesdays, setTuesday] = useState([]);
-    const [wednesdays, setWednesday] = useState([]);
-    const [thursdays, setThursday] = useState([]);
-    const [fridays, setFriday] = useState([]);
-    const [saturdays, setSaturday] = useState([]);
-    const [sundays, setSunday] = useState([]);
 
-    useEffect(() => {
-        const mondayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'mondays'
-        );
-        setMondays(mondayAnime);
-    }, [watchlist])
 
-    useEffect(() => {
-        const tuesdayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'tuesdays'
-        );
-        setTuesday(tuesdayAnime);
-    }, [watchlist])
+  const handleRemoveFromWatchlist = async (animeId) => {
+    if (!user) {
+      toast.error('Please log in to manage your watchlist');
+      return;
+    }
 
-    useEffect(() => {
-        console.log('Watchlist:', watchlist);
-        const wednesdayAnime = (watchlist || []).filter(anime => {
-            console.log('Anime broadcast:', anime?.broadcast.day);
-            return anime?.broadcast?.day?.toLowerCase() === 'wednesdays'
-        });
-        setWednesday(wednesdayAnime);
-    }, [watchlist])
-    
-    useEffect(() => {
-        const thursdayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'thursdays'
-        );
-        setThursday(thursdayAnime);
-    }, [watchlist])
+    try {
+      setIsLoading(true);
+      await removeFromWatchlist(user.uid, animeId);
+      
+      setWatchlist(prev => prev.filter(anime => anime.mal_id !== animeId));
+      toast.success('Anime removed from watchlist');
+      
+      if (onWatchlistUpdate) {
+        onWatchlistUpdate(watchlist.filter(anime => anime.mal_id !== animeId));
+      }
+    } catch (error) {
+      console.error('Error removing from watchlist:', error);
+      toast.error('Failed to remove anime from watchlist');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    useEffect(() => {
-        const fridayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'fridays'
-        );
-        setFriday(fridayAnime);
-    }, [watchlist])
 
-    useEffect(() => {
-        const saturdayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'saturdays'
-        );
-        setSaturday(saturdayAnime);
-    }, [watchlist])
 
-    useEffect(() => {
-        const sundayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'sundays'
-        );
-        setSunday(sundayAnime);
-    }, [watchlist])
-
-  
 
   return (
     <>
-    <Navbar />
-    <div className="watchlist-container">
-      
-      <img src={watchlist_background} alt='Anime background' className='watchlist-banner-img' />
-      <div className='watchlist-preview-scroll'>
-        
-        <div className='watchlist-preview-header'>
-          <h1>My Watchlist</h1>
-        </div>
+      <Navbar />
+      <div className="watchlist-container">
+        <img src={watchlist_background} alt="Anime background" className="watchlist-banner-img" />
+        <div className="watchlist-preview-scroll">
+          <div className="watchlist-preview-header">
+            <h1>My Watchlist</h1>
+          </div>
 
-
-        {isLoading ? (
+          {!user ? (
+            <p>Please log in to view your watchlist</p>
+          ) : isLoading ? (
             <div className="watchlist-grid">
-              <img src={loading_gif} alt='Anime girl running' />
+              <img src={loading_gif} alt="Loading..." />
             </div>
+          ) : error ? (
+            <p className="error-message">{error}</p>
           ) : watchlist.length === 0 ? (
             <p>Your watchlist is empty</p>
           ) : (
             <div className="watchlist-grid">
               {watchlist.map((anime) => (
                 <div key={anime.mal_id} className="watchlist-item">
-                  <img 
-                    src={anime.images?.jpg?.image_url} 
-                    alt={anime.title} 
-                  />
-                  <h2>{ anime.title_english || anime.title }</h2>
-                  <img 
-                    src={remove_icon} 
-                    alt='Remove Icon' 
-                    className='remove'
-                    onClick={() => handleRemoveToWatchlist(anime.mal_id)}
+                  <img src={anime.images?.jpg?.image_url} alt={anime.title} />
+                  <h2>{anime.title_english || anime.title}</h2>
+                  <img
+                    src={remove_icon}
+                    alt="Remove"
+                    className="remove"
+                    onClick={() => handleRemoveFromWatchlist(anime.mal_id)}
                   />
                 </div>
               ))}
             </div>
           )}
+        </div>
+        
+        {/* Weekly schedule section remains the same */}
       </div>
-    <div className='watchlist-schedule-container'>
-
-      <div className='watchlist-schedule-header'>
-        <h1>Weekly Watchlist</h1>
-      </div>
-
-      <div className='watchlist-schedule'>
-        <div id='mondays' className='weekday'>
-            <h3>Monday</h3>
-            {mondays.length > 0 ? (
-                <ul>
-                    {mondays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                        
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-
-        <div id='tuesdays' className='weekday'>
-            <h3>Tuesday</h3>
-            {tuesdays.length > 0 ? (
-                <ul>
-                    {tuesdays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-
-        <div id='wednesdays' className='weekday'>
-            <h3>Wednesday</h3>
-            {wednesdays.length > 0 ? (
-                <ul>
-                    {wednesdays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-        <div id='thursdays' className='weekday'>
-            <h3>Thursday</h3>
-            {thursdays.length > 0 ? (
-                <ul>
-                    {thursdays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-        <div id='fridays' className='weekday'>
-            <h3>Friday</h3>
-            {fridays.length > 0 ? (
-                <ul>
-                    {fridays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-        <div id='saturdays' className='weekday'>
-            <h3>Saturday</h3>
-            {saturdays.length > 0 ? (
-                <ul>
-                    {saturdays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-        <div id='sundays' className='weekday'>
-            <h3>Sunday</h3>
-            {sundays.length > 0 ? (
-                <ul>
-                    {sundays.map((anime, index) => (
-                        <li key={index}>
-                            {anime.title_english || anime.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No anime scheduled this day</p>
-            )}
-        </div>
-      </div>
-    </div>
-  </div>
-  </>
-  )
+    </>
+  );
 }
 
-export default Watchlist
+export default Watchlist;

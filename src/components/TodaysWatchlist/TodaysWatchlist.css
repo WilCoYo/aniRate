@@ -1,0 +1,11 @@
+.schedule-section {
+    padding: 8rem 3rem .5rem 4rem;
+    position: relative;
+    z-index: 4;
+}
+
+h3 {
+    font-size: 2rem;
+    color: #F26B83;
+}
+

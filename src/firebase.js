@@ -1,7 +1,16 @@
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import {addDoc, collection, getFirestore, query, where, updateDoc, arrayUnion, getDocs, arrayRemove } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+import { 
+  getFirestore, 
+  collection, 
+  query, 
+  where, 
+  getDocs,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  addDoc
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
@@ -14,143 +23,143 @@ const firebaseConfig = {
   measurementId: "G-NW5JN1DPBT"
 };
 
-// {
-//   "rules": {
-//     ".read": "now < 1734238800000",  // 2024-12-15
-//     ".write": "now < 1734238800000",  // 2024-12-15
-//   }
-// }
-
-
 const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
-const signup = async (name, email, password) => {
-    try {
-        const res = await createUserWithEmailAndPassword(auth, email, password);
-        const user = res.user;
-        await addDoc(collection(db, "user"), {
-            uid: user.uid,
-            name,
-            authProvider: "local",
-            email,
-            watchlist: []
-        });
-    } catch (error) {
-        console.log(error);
-        toast.error(error.code.split('/')[1].split('-').join(' '));
-    }
-}
-
-const login = async (email, password) => {
-  try {
-      await signInWithEmailAndPassword(auth, email, password)
-  } catch (error) {
-      console.log(error);
-      toast.error(error.code.split('/')[1].split('-').join(' '));
-      throw error; // Add this line to propagate the error
-  }
-}
-
-const logout = () => {
-    signOut(auth);
-}
-
-
-const addToWatchlist = async (uid, item) => {
-    const userRef = collection(db, "user");
-  
-// Query the user document based on the uid field
-    const q = query(userRef, where("uid", "==", uid));
-    const querySnapshot = await getDocs(q);
-  
-// Loop through query results (should be only one document)
-    querySnapshot.forEach(async (doc) => {
-// Add item to the watchlist array
-      await updateDoc(doc.ref, {
-        watchlist: arrayUnion(item)
-      });
-      console.log('Added to watchlist');
-    });
-  
-    if (querySnapshot.empty) {
-      console.log("No user found with the provided uid.");
-    }
-  }
-
-
-
-  
-  const removeFromWatchlist = async (uid, item) => {
-    const userRef = collection(db, "user");
-  
-// Query the user document based on the uid field
-    const q = query(userRef, where("uid", "==", uid));
-    const querySnapshot = await getDocs(q);
-  
-// Loop through query results (should be only one document)
-    querySnapshot.forEach(async (doc) => {
-// Remove item from the watchlist array
-      await updateDoc(doc.ref, {
-        watchlist: arrayRemove(item)
-      });
-      console.log('Removed from watchlist');
-    });
-  
-    if (querySnapshot.empty) {
-      console.log("No user found with the provided uid.");
-    }
-  }
-
-
-
-
 const getWatchlistData = async (uid) => {
   try {
-    const colRef = collection(db, 'user');
-    const snapshot = await getDocs(colRef);
+    // Verify we have a uid
+    if (!uid) {
+      throw new Error("No user ID provided");
+    }
 
-    const users = []
-    snapshot.docs.forEach((doc) => {
-      users.push({...doc.data(), id: doc.id })
-    });
+    // Verify user is authenticated
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("User not authenticated");
+    }
 
-    const user = users.find(user => user.uid === uid);
-
-
-    if(user && user.watchlist){
-      return user.watchlist;
-    } else {
-      console.log("No watchlist found for user")
+    const userRef = collection(db, "user");
+    const q = query(userRef, where("uid", "==", uid));
+    
+    const querySnapshot = await getDocs(q);
+    
+    if (querySnapshot.empty) {
+      console.log("No user document found");
       return [];
     }
 
+    const userData = querySnapshot.docs[0].data();
+    return userData.watchlist || [];
+
   } catch (error) {
-    console.error('Error fetching watchlist:', error)
+    console.error("Error in getWatchlistData:", error);
     throw error;
   }
-}
+};
 
+const addToWatchlist = async (uid, animeId) => {
+  try {
+    if (!uid || !auth.currentUser) {
+      throw new Error("User not authenticated");
+    }
 
+    const userRef = collection(db, "user");
+    const q = query(userRef, where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
 
+    if (querySnapshot.empty) {
+      throw new Error("User document not found");
+    }
 
+    const docRef = querySnapshot.docs[0].ref;
+    await updateDoc(docRef, {
+      watchlist: arrayUnion(animeId)
+    });
 
+    return true;
+  } catch (error) {
+    console.error("Error in addToWatchlist:", error);
+    throw error;
+  }
+};
 
-//     const userRef = collection(db, "user");
+const removeFromWatchlist = async (uid, animeId) => {
+  try {
+    if (!uid || !auth.currentUser) {
+      throw new Error("User not authenticated");
+    }
+
+    const userRef = collection(db, "user");
+    const q = query(userRef, where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      throw new Error("User document not found");
+    }
+
+    const docRef = querySnapshot.docs[0].ref;
+    await updateDoc(docRef, {
+      watchlist: arrayRemove(animeId)
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error in removeFromWatchlist:", error);
+    throw error;
+  }
+};
+
+const signup = async (name, email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
     
-//     const q = query(userRef, where("uid", "==", uid));
-//     const querySnapshot = await getDocs(q,);
-      
-//     querySnapshot.forEach((doc) => {
-//       const userData = doc.data();
-//       console.log("Watchlist:", userData.watchlist);
-// });
-  
+    // Create the user document in Firestore
+    await addDoc(collection(db, "user"), {
+      uid: user.uid,
+      name,
+      authProvider: "local",
+      email,
+      watchlist: []
+    });
 
-  
+    return user;
+  } catch (error) {
+    console.error("Error in signup:", error);
+    toast.error(error.code.split('/')[1].split('-').join(' '));
+    throw error;
+  }
+};
 
+const login = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error) {
+    console.error("Error in login:", error);
+    toast.error(error.code.split('/')[1].split('-').join(' '));
+    throw error;
+  }
+};
 
-export { auth, db, login, signup, logout, addToWatchlist, removeFromWatchlist, getWatchlistData};
+const logout = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Error in logout:", error);
+    throw error;
+  }
+};
+
+export {
+  auth,
+  db,
+  login,
+  signup,
+  logout,
+  addToWatchlist,
+  removeFromWatchlist,
+  getWatchlistData
+};

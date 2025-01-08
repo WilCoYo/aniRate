@@ -1,0 +1,57 @@
+.anime-news {
+    align-items: end;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    height: 100vh;
+    margin: .5rem;
+    padding: 6rem 3rem 1rem 0rem;
+    position: relative;
+    text-align: start;
+    width: 100%;
+    z-index: 3;
+}
+
+.anime-news h3 {
+    color: #F26B83;
+}
+
+
+.anime-news-list {
+    background-color: #464646cc;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: calc(100% - 30rem);
+    justify-content: space-evenly;
+    list-style: none;
+    overflow-y: scroll;
+    padding-top: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.anime-news-list::-webkit-scrollbar {
+    display: none;
+}
+
+
+#anime-news-title {
+    font-size: 1rem;
+}
+
+
+.anime-news-imgs {
+    max-width: 4rem;
+    position: relative;
+    bottom: 0;
+    margin-right: .5rem;
+}
+
+#anime-news-list-element {
+    width: 30rem;
+    display: flex;
+    border-bottom: 1px solid white;
+    padding: .5rem;
+    align-items: center;
+}

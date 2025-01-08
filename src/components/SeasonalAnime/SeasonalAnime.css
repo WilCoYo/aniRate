@@ -1,0 +1,39 @@
+.seasonal-section {
+    width: 100%;
+    padding: 0 4rem .5rem 3rem;
+    margin: .5rem;
+    font-size: 2rem;
+    text-align: start;
+    overflow-x: auto; 
+    
+    z-index: 11;
+    position: absolute;
+    bottom: 0;
+}
+
+.seasonal-section h3 {
+    color: #F26B83;
+}
+
+
+
+.seasonal-list {
+    width: 100%;
+    position: relative;
+    display: flex;
+    gap: 2rem;
+    overflow-x: scroll;  /* Changed back to 'scroll' */
+    overflow-y: hidden;
+    white-space: nowrap;
+ 
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+}
+
+
+.seasonal-list::-webkit-scrollbar {
+    display: none;
+}
