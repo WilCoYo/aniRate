@@ -1,11 +1,64 @@
 .schedule-section {
-    padding: 8rem 3rem .5rem 4rem;
-    position: relative;
-    z-index: 4;
+    padding: 5.5rem 0rem .5rem 3rem;
+    margin: .5rem 3.5rem .5rem .5rem;
+    font-size: 2rem;
+    text-align: start;
+    overflow-x: auto; 
+    white-space: nowrap;
+    z-index: 11;
+    height: 50vh;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    overflow-y: hidden;
+
+    scrollbar-width: none;  /* Firefox */
 }
 
-h3 {
+
+.schedule-list {
+    z-index: 11;
+}
+
+.todays-schedule {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    overflow-x: scroll;  /* Changed back to 'scroll' */
+    overflow-y: hidden;
+    white-space: nowrap;
+    
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+}
+
+.schedule-section h3 {
+    text-align: center;
     font-size: 2rem;
     color: #F26B83;
 }
 
+.todays-schedule .titlecard-btns {
+    display: none;
+}
+
+.todays-schedule .anime-card-date-time {
+    display: none;
+}
+
+.todays-schedule .anime-card {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+/* 
+* {
+    outline: 1px solid red;
+} */

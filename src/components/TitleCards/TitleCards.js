@@ -13,7 +13,7 @@ import { addToWatchlist, auth} from '../../firebase'
 
 
 
-function TitleCards({anime, onWatchlistUpdate}) {  
+function TitleCards({anime, onWatchlistUpdate, parentComponent}) {  
     const userId = auth.currentUser?.uid;
     const navigate = useNavigate();
 
@@ -45,12 +45,12 @@ function TitleCards({anime, onWatchlistUpdate}) {
 
 
     return (
-        <div className='anime-card'>
+        <div className={`anime-card ${parentComponent}`} >
             <div className='card-list'>
                 
                     <div className='anime-image'>
                         {anime.broadcast.string === 'unknown' ? (
-                            <div className='anime-card-date-time'>
+                            <div className={`anime-card-date-time ${parentComponent}`}>
                                 <h4>Broadcast Info Unknown</h4>
                             </div>  
                         ) :
@@ -74,7 +74,7 @@ function TitleCards({anime, onWatchlistUpdate}) {
                    
                     
                     
-                    <div className='titlecard-btns'>
+                    <div className={`titlecard-btns ${parentComponent}`}>
                         
                         <button className='titlecard-btn-lft btn'
                                 onClick={handleAddToWatchlist}

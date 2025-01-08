@@ -73,13 +73,14 @@ useEffect(() => {
       const cachedWatchlist = getCachedData(user.uid);
       if(cachedWatchlist) {
         setWatchlist(cachedWatchlist);
+        console.log('Cached Watchlist:', cachedWatchlist);
         return;
       }
 
       const watchlistIds = await getWatchlistData(user.uid);
 
       if(watchlistIds?.length) {
-        const animeDataPromises = watchlistIds.maps((id, index) =>
+        const animeDataPromises = watchlistIds.map((id, index) =>
         new Promise(resolve =>
           setTimeout(() => resolve(fetchAnimeData(id)), index * 300)
         )
@@ -88,6 +89,7 @@ useEffect(() => {
       const animeData = await Promise.all(animeDataPromises);
       const filteredData = animeData.filter(Boolean);
       setWatchlist(filteredData);
+      console.log('Filtered Watchlist:', filteredData)
       }
     } catch (error) {
       console.error('Error fetching watchlist:', error);
@@ -140,8 +142,9 @@ return (
     <Navbar />
     
     <div className='home-top-row'>
-      <TodaysWatchlist watchlist={watchlist} loading={loading} error={error} />
       <News seasonalAnime={seasonalAnime}/>
+      <TodaysWatchlist watchlist={watchlist} loading={loading} error={error} />
+      
     </div>
     
     <SeasonalAnime  seasonalAnime={seasonalAnime}/>
