@@ -3,10 +3,11 @@ import './Home.css';
 import { auth, getWatchlistData } from '../../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import Navbar from '../../../components/Navbar/Navbar';
-import News from '../../../components/News/News';
+
 import SeasonalAnime from '../../../components/SeasonalAnime/SeasonalAnime';
-import TodaysWatchlist from '../../../components/TodaysWatchlist/TodaysWatchlist';
+
 import hero_banner from '../../images/hero-image.jpg';
+import WeeklyWatchlist from '../../../components/WeeklyWatchlist/WeeklyWatchlist';
 
 
 
@@ -142,9 +143,9 @@ return (
     <Navbar />
     
     <div className='home-top-row'>
-      <News seasonalAnime={seasonalAnime}/>
-      <TodaysWatchlist watchlist={watchlist} loading={loading} error={error} />
-      
+      {/* <News seasonalAnime={seasonalAnime}/> */}
+      {/* <TodaysWatchlist watchlist={watchlist} loading={loading} error={error} /> */}
+      <WeeklyWatchlist watchlist={watchlist} loading={loading} error={error} />
     </div>
     
     <SeasonalAnime  seasonalAnime={seasonalAnime}/>

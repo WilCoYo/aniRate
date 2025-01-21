@@ -5,10 +5,9 @@
     font-size: 2rem;
     text-align: start;
     overflow-x: auto; 
-    
+    position: relative;
     z-index: 11;
-    position: absolute;
-    bottom: 0;
+   
 }
 
 .seasonal-section h3 {

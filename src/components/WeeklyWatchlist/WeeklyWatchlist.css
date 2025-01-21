@@ -1,10 +1,22 @@
-.watchlist {
-   
-    width: 40rem;
-    max-height: 50rem;
+.watchlist-dropdown {
+    margin-top: 6rem;
+    font-size: 1rem;
+    z-index: 11;
+    width: 100%;
+}
 
-    overflow-y: scroll;  /* Changed back to 'scroll' */
-    overflow-x: hidden;
+.watchlist-dropdown h3{
+    color: #F26B83;
+}
+
+.watchlist {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0 4rem .5rem 3rem;
+
+    overflow-y: hidden;  /* Changed back to 'scroll' */
+    overflow-x: auto;
     white-space: nowrap;
  
     -webkit-overflow-scrolling: touch;
@@ -14,30 +26,56 @@
     -ms-overflow-style: none;  /* Internet Explorer/Edge */
     
     z-index: 3;
-      /* other styles */
-      background: rgba(39, 39, 39, 0.75);
-      backdrop-filter: blur(10px);
-       /* fallback for old browsers */
-      -webkit-backdrop-filter: blur(60px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+   
     
 }
+
+
 
 .watchlist h2 {
     text-align: center;
     font-size: 2rem;
 }
 
-.weekday h3{
+.weekday {
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 1px 1rem rgba(192, 192, 192, 0.432);
+    background-color: rgba(70, 70, 70, 0.7);
+
+    overflow-x: auto;  /* Changed back to 'scroll' */
+    overflow-y: hidden;
+    white-space: nowrap;
+ 
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+}
+
+.weekday::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}
+
+.weekday h2{
+    font-size: 1rem;
     padding: .5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2) ;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2) ;
    
 }
 
+.weekday h2:hover {
+    cursor: pointer;
+}
+
 .weekday ul {
-    padding: 1rem;
+    width: 17rem;
+    padding: 1rem 1rem 1rem 0;
     line-height: 2rem;
+    display: flex;
+    box-shadow: 0px 1px 1rem rgba(192, 192, 192, 0.432);
 }
 
 .remove:hover {
@@ -51,7 +89,7 @@
 
 .weekday li{
     display: flex;
-    justify-content: space-between;
+    margin-left: 1rem;
     list-style: none;
     font-size: 1rem;
     font-style: italic;
@@ -65,24 +103,13 @@
     padding-left: 3rem;
 }
 
-.watchlist-dropdown {
-    position: absolute;
-    top: 6rem;
-    right: 12rem;
-    display: flex;
-    font-size: 1rem;
-    z-index: 11;
-    
+.weekday .titlecard-btns {
+    display: none;
 }
 
-.watchlist-dropdown:hover {
-    cursor: pointer;
-}
 
-.watchlist-dropdown:hover .watchlist {
-    display: block;
-    
-}
+
+
 
 @-webkit-keyframes slide-bottom {
     0% {
