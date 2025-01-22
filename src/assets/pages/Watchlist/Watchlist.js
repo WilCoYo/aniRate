@@ -3,7 +3,7 @@ import './Watchlist.css';
 import { removeFromWatchlist, getWatchlistData, auth } from '../../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import remove_icon from '../../../assets/images/remove_icon.svg';
-import watchlist_background from '../../images/haikyuu-budha-background.jpg';
+import watchlist_background from '../../images/watchlist-background.jpg';
 import Navbar from '../../../components/Navbar/Navbar';
 import loading_gif from '../../images/loading-anime.gif';
 import { toast } from 'react-toastify';
@@ -170,14 +170,14 @@ function Watchlist({ onWatchlistUpdate }) {
         <img src={watchlist_background} alt="Anime background" className="watchlist-banner-img" />
         <div className="watchlist-preview-scroll">
           <div className="watchlist-preview-header">
-            <h1>My Watchlist</h1>
+            <h1>My <strong className='pulse'>Watchlist</strong></h1>
           </div>
 
           {!user ? (
             <p>Please log in to view your watchlist</p>
           ) : isLoading ? (
-            <div className="watchlist-grid">
-              <img src={loading_gif} alt="Loading..." />
+            <div className="watchlist-loading">
+              <img src={loading_gif} alt="Loading..." className='loading-gif'/>
             </div>
           ) : error ? (
             <p className="error-message">{error}</p>
