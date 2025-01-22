@@ -6,7 +6,7 @@ import Navbar from '../../../components/Navbar/Navbar';
 
 import SeasonalAnime from '../../../components/SeasonalAnime/SeasonalAnime';
 
-import hero_banner from '../../images/hero-image.jpg';
+import hero_banner from '../../images/hero-image-2.jpg';
 import WeeklyWatchlist from '../../../components/WeeklyWatchlist/WeeklyWatchlist';
 
 

@@ -8,11 +8,11 @@
 }
 
 .banner-img {
-    position: absolute;
+    position: fixed;
     min-height: 100vh;
-    min-width: 100%;
-    mask-image: linear-gradient(to right, transparent, black 75%);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 75%);
+    width: 100%;
+    /* mask-image: linear-gradient(to right, transparent, black 75%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 75%); */
     overflow: hidden;
     z-index: 1;
 }
