@@ -24,6 +24,11 @@ a {
     gap: 3rem;
 }
 
+.hamburger-menu {
+    display: none;
+}
+
+
 .navbar-logo {
     color: #F26B83;
 }
@@ -67,10 +72,6 @@ a {
     border-radius: .25rem;
     width: 2rem;
     
-}
-
-.navbar-right .dropdown-arrow {
-    width: 1.5rem;
 }
 
 .navbar-profile {
@@ -148,5 +149,77 @@ button:hover {
 
 
 @media only screen and (max-width: 27rem) {
+    .navbar {
+        width: 100%;
+        height: 3rem;
+        background-image: linear-gradient(180deg, rgb(114, 114, 114, .9) 90%, transparent);
+        position: fixed;         /* Change from absolute to fixed */
+        top: 0;
+        left: 0;
+        z-index: 15;
+    }
+
+ 
+
+    .hamburger-menu {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        padding-right: 1rem;
+    }
+
+  
+    
+    .navbar-left ul {
+        display: none;
+        list-style: none;
+        background: #080808c9;
+        padding: 1rem 1.5rem;
+        border-radius: .15rem;
+
+        position: absolute;
+        top: 3rem; /* Below the navbar */
+        right: 0;
+
+
+    
+
+        
+    }
+
+    .navbar-left ul.open {
+        display: flex;            /* Change to flex instead of block */
+        flex-direction: column;   /* Stack items vertically */
+        list-style: none;
+        background: #080808c9;
+        padding: 1rem 1.5rem;
+        border-radius: .15rem;
+        position: absolute;
+        top: 1rem;
+        right: 0;                /* Keep right: 0 to make it full width */
+        z-index: 999;  
+        width:fit-content;
+    }
+
+
+
+    .navbar-left li{
+        text-align: center;
+        padding: .5rem 0
+    }
+
+    .navbar-left li button{
+        text-align: center;
+    }
+   
+    .navbar-right .profile {
+       display: none;
+        
+    }
+
+    .dropdown-arrow {
+        display: none;
+    }
     
 }
