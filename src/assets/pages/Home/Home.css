@@ -13,7 +13,7 @@
 .banner-img {
     position: fixed;
     min-height: 100vh;
-    width: 100%;
+    min-width: 100%;
     /* mask-image: linear-gradient(to right, transparent, black 75%);
     -webkit-mask-image: linear-gradient(to right, transparent, black 75%); */
     overflow: hidden;
@@ -25,5 +25,14 @@
     justify-content: space-between;
 }
 
+
+@media only screen and (max-width: 27rem) {
+    .banner-img {
+        position: fixed;
+        min-height: 100vh;
+        right: 0;
+    }
+    
+}
 
 

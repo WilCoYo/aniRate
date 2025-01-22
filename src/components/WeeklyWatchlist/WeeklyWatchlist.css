@@ -14,9 +14,9 @@
 .watchlist {
     display: flex;
     flex-direction: column;
-
+    gap: 1rem;
     margin-top: 1rem;
-
+    background-color: rgba(70, 70, 70, 0.75);
     overflow-y: hidden;  /* Changed back to 'scroll' */
     overflow-x: auto;
     white-space: nowrap;
@@ -29,7 +29,7 @@
     
     z-index: 3;
    
-    background-color: rgba(70, 70, 70, 0.95);
+    
 }
 
 
@@ -37,6 +37,7 @@
 .watchlist h2 {
     text-align: center;
     font-size: 2rem;
+    background-color: rgba(70, 70, 70, 0.95);
 }
 
 .weekday-list {
@@ -45,7 +46,7 @@
     flex: 0 0 auto;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0px 1px 1rem rgba(192, 192, 192, 0.432);
-    
+    background-color: rgba(70, 70, 70, 0.95);
 
     overflow-x: auto;  /* Changed back to 'scroll' */
     overflow-y: hidden;
@@ -92,7 +93,7 @@
 
 .weekday-list li{
     display: flex;
-    margin-left: 1rem;
+    margin-right: 1rem;
     list-style: none;
     font-size: 1rem;
     font-style: italic;
@@ -142,4 +143,19 @@
   .slide-bottom {
 	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+@media only screen and (max-width: 27rem) {
+    .watchlist-dropdown {
+        padding: 5rem 1rem 0 1rem;
+        font-size: 1rem;
+        z-index: 11;
+        width: 100%;
+    }
+
+    .watchlist-dropdown h3{
+        text-align: start;
+    }
+    
 }

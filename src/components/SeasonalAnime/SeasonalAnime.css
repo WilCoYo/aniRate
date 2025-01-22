@@ -1,6 +1,7 @@
 .seasonal-section {
     width: 100%;
     padding: 0 6rem .5rem 6rem;
+    margin: 2rem 0 2rem 0;
     font-size: 2rem;
     text-align: start;
     overflow-x: auto; 
@@ -34,4 +35,20 @@
 
 .seasonal-list::-webkit-scrollbar {
     display: none;
+}
+
+
+@media only screen and (max-width: 27rem) {
+    .seasonal-section {
+        width: 100%;
+        padding: 0 1rem;
+        font-size: 2rem;
+        text-align: start;
+        overflow-x: auto; 
+        position: relative;
+        z-index: 11;
+       
+    }
+
+  
 }

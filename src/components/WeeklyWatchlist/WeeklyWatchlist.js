@@ -160,7 +160,7 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     return (
         <>
         <div className='watchlist-dropdown'>
-            <h3>Your <strong className="pulse">Weekly</strong> Anime</h3>
+            <h3>Weekly<strong className="pulse"> Watchlist</strong></h3>
             <div className='watchlist' ref={cardsRef}>
                 <div id='mondays' className='weekday'>
                     <h2 onClick={() => extendWeekday('mondays-list')}>Monday</h2>
