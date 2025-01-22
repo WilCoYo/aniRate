@@ -123,14 +123,6 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     }, [watchlist])
 
 
-    const extendWeekday = (weekday) => {
-        const element = document.getElementById(weekday);
-        if(element.style.width === '17rem'){
-            element.style.width = '33rem';
-        } else {
-            element.style.width = '17rem'
-        }
-    };
 
     const cardsRef = useRef(null);
 
@@ -154,144 +146,153 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     }, []);
 
 
+
+    const extendWeekday = (weekdayId) => {
+        const element = document.getElementById(weekdayId);
+        if(element.style.display === 'none'){
+            element.style.display = 'flex';
+        } else {
+            element.style.display = 'none'
+        }
+    };
+
+
     return (
         <>
         <div className='watchlist-dropdown'>
-            
-        <h3><strong className="pulse">Weekly</strong>Watchlist</h3>
+            <h3>Your <strong className="pulse">Weekly</strong> Anime</h3>
             <div className='watchlist' ref={cardsRef}>
-           
-            
-            <div id='mondays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('mondays')}
-                >Monday</h2>
-                {mondays.length > 0 ? (
-                    <ul>
-                        {mondays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
-                               
-                            </li>
+                <div id='mondays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('mondays-list')}>Monday</h2>
+                    {mondays.length > 0 ? (
+                        
+                            <ul id='mondays-list' className='weekday-list'>
+                                {mondays.map((anime, index) => (
+                                    <li key={index}>
+                                        <TitleCards key={anime.mal_id} anime={anime} />
+                                    
+                                    </li>
+                                    
+                                ))}
+                            </ul>
+                        
+                    ) : (
+                        <p id='mondays-list' className='weekday-list'>No anime scheduled for Monday.</p>
+                    )}
+                </div>
+
+                <div id='tuesdays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('tuesdays-list')}>Tuesday</h2>
+                        {tuesdays.length > 0 ? (
                             
-                        ))}
-                    </ul>
-                ) : (
-                    <p></p>
-                )}
-            </div>
+                                <ul id='tuesdays-list' className='weekday-list'>
+                                    {tuesdays.map((anime, index) => (
+                                        <li key={index}>
+                                            <TitleCards key={anime.mal_id} anime={anime} />
+                                        
+                                        </li>
+                                        
+                                    ))}
+                                </ul>
+                            
+                        ) : (
+                            <p id='tuesdays-list' className='weekday-list'>No anime scheduled for Tuesday.</p>
+                        )}
+                </div>
 
-            <div id='tuesdays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('tuesdays')}
-                >Tuesday</h2>
-                {tuesdays.length > 0 ? (
-                    <ul>
-                        {tuesdays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
-                               
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p></p>
-                )}
-            </div>
-
-            <div id='wednesdays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('wednesdays')}
-                >Wednesday</h2>
-                {wednesdays.length > 0 ? (
-                    <ul>
-                        {wednesdays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
+                <div id='wednesdays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('wednesdays-list')}>Wednesday</h2>
+                        {wednesdays.length > 0 ? (
+                            
+                                <ul id='wednesdays-list' className='weekday-list'>
+                                    {wednesdays.map((anime, index) => (
+                                        <li key={index}>
+                                            <TitleCards key={anime.mal_id} anime={anime} />
+                                        
+                                        </li>
+                                        
+                                    ))}
+                                </ul>
+                            
+                        ) : (
+                            <p id='wednesdays-list' className='weekday-list'>No anime scheduled for Wednesday.</p>
+                        )}
+                </div>
+                <div id='thursdays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('thursdays-list')}>Thursday</h2>
+                            {thursdays.length > 0 ? (
                                 
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='thursdays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('thursdays')}
-                >Thursday</h2>
-                {thursdays.length > 0 ? (
-                    <ul>
-                        {thursdays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
+                                    <ul id='thursdays-list' className='weekday-list'>
+                                        {thursdays.map((anime, index) => (
+                                            <li key={index}>
+                                                <TitleCards key={anime.mal_id} anime={anime} />
+                                            
+                                            </li>
+                                            
+                                        ))}
+                                    </ul>
                                 
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='fridays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('fridays')}
-                >Friday</h2>
-                {fridays.length > 0 ? (
-                    <ul>
-                        {fridays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
-                               
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='saturdays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('saturdays')}
-                >Saturday</h2>
-                {saturdays.length > 0 ? (
-                    <ul>
-                        {saturdays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
+                            ) : (
+                                <p id='thursdays-list' className='weekday-list'>No anime scheduled for Thursday.</p>
+                            )}
+                </div>
+                <div id='fridays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('fridays-list')}>Friday</h2>
+                            {fridays.length > 0 ? (
                                 
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
-            <div id='sundays' className='weekday'>
-                <h2
-                    onClick={() => extendWeekday('sundays')}
-                >Sunday</h2>
-                {sundays.length > 0 ? (
-                    <ul>
-                        {sundays.map((anime, index) => (
-                            <li key={index}>
-                                <TitleCards key={anime.mal_id} anime={anime} />
+                                    <ul id='fridays-list' className='weekday-list'>
+                                        {fridays.map((anime, index) => (
+                                            <li key={index}>
+                                                <TitleCards key={anime.mal_id} anime={anime} />
+                                            
+                                            </li>
+                                            
+                                        ))}
+                                    </ul>
                                 
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No anime scheduled this day</p>
-                )}
-            </div>
+                            ) : (
+                                <p id='fridays-list' className='weekday-list'>No anime scheduled for Friday.</p>
+                            )}
+                </div>
+                <div id='saturdays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('saturdays-list')}>Saturday</h2>
+                            {saturdays.length > 0 ? (
+                                
+                                    <ul id='saturdays-list' className='weekday-list'>
+                                        {saturdays.map((anime, index) => (
+                                            <li key={index}>
+                                                <TitleCards key={anime.mal_id} anime={anime} />
+                                            
+                                            </li>
+                                            
+                                        ))}
+                                    </ul>
+                                
+                            ) : (
+                                <p id='saturdays-list' className='weekday-list'>No anime scheduled for Saturday.</p>
+                            )}
+                </div>
+                <div id='sundays' className='weekday'>
+                    <h2 onClick={() => extendWeekday('sundays-list')}>Sunday</h2>
+                            {sundays.length > 0 ? (
+                                
+                                    <ul id='sundays-list' className='weekday-list'>
+                                        {sundays.map((anime, index) => (
+                                            <li key={index}>
+                                                <TitleCards key={anime.mal_id} anime={anime} />
+                                            
+                                            </li>
+                                            
+                                        ))}
+                                    </ul>
+                                
+                            ) : (
+                                <p id='sundays-list' className='weekday-list'>No anime scheduled for Sunday.</p>
+                            )}
+                </div>
             
            
-
-
-
-
-           
-        </div>
+            </div>
         </div>
         
         </>

@@ -1,5 +1,5 @@
 .watchlist-dropdown {
-    margin-top: 6rem;
+    margin: 6rem 4rem .5rem 3rem;
     font-size: 1rem;
     z-index: 11;
     width: 100%;
@@ -7,13 +7,15 @@
 
 .watchlist-dropdown h3{
     color: #F26B83;
+    text-align: center;
+    font-size: 2rem;
 }
 
 .watchlist {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 
-    margin: 0 4rem .5rem 3rem;
+    
 
     overflow-y: hidden;  /* Changed back to 'scroll' */
     overflow-x: auto;
@@ -27,7 +29,7 @@
     
     z-index: 3;
    
-    
+    background-color: rgba(70, 70, 70, 0.7);
 }
 
 
@@ -37,11 +39,13 @@
     font-size: 2rem;
 }
 
-.weekday {
+.weekday-list {
+    display: none;
+    
     flex: 0 0 auto;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0px 1px 1rem rgba(192, 192, 192, 0.432);
-    background-color: rgba(70, 70, 70, 0.7);
+    
 
     overflow-x: auto;  /* Changed back to 'scroll' */
     overflow-y: hidden;
@@ -70,8 +74,7 @@
     cursor: pointer;
 }
 
-.weekday ul {
-    width: 17rem;
+.weekday-list ul {
     padding: 1rem 1rem 1rem 0;
     line-height: 2rem;
     display: flex;
@@ -87,7 +90,7 @@
     font-size: 1rem;
 }
 
-.weekday li{
+.weekday-list li{
     display: flex;
     margin-left: 1rem;
     list-style: none;
@@ -103,7 +106,7 @@
     padding-left: 3rem;
 }
 
-.weekday .titlecard-btns {
+.weekday-list .titlecard-btns {
     display: none;
 }
 
