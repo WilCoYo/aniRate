@@ -24,7 +24,9 @@
     overflow-y: hidden;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding-top: 8rem;
     padding-bottom: 1rem;
 }
@@ -52,6 +54,8 @@
     overflow-y: auto; /* Allow scrolling within this container */
     max-height: none;
     height: auto;
+    margin: 0 1rem 0 1rem;
+    width: fit-content;
 }
 
 .watchlist-loading {
@@ -76,7 +80,7 @@
     max-height: none;
     height: auto;
     overflow-y: scroll;
-
+    max-width: 100%;
     /* other styles */
     background: rgba(39, 39, 39, 0.75);
     backdrop-filter: blur(10px);
@@ -123,3 +127,26 @@
     outline: 1px red solid;
 } */
 
+@media only screen and (max-width: 27rem) {
+    .watchlist-grid {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: 10rem 10rem;
+        max-width: 100%;
+    }
+
+    .watchlist-item img {
+        max-height: 55%;
+        
+    }
+
+    .watchlist-item {
+        justify-content: start;
+    }
+
+    .watchlist-preview-scroll  {
+        padding: 0 1rem;
+        margin: 0;
+        width: 100%;
+    }
+}

@@ -168,11 +168,12 @@ function Watchlist({ onWatchlistUpdate }) {
       <Navbar />
       <div className="watchlist-container">
         <img src={watchlist_background} alt="Anime background" className="watchlist-banner-img" />
-        <div className="watchlist-preview-scroll">
-          <div className="watchlist-preview-header">
+        <div className="watchlist-preview-header">
             <h1>My <strong className='pulse'>Watchlist</strong></h1>
-          </div>
-
+        </div>
+        <div className="watchlist-preview-scroll">
+          
+    
           {!user ? (
             <p>Please log in to view your watchlist</p>
           ) : isLoading ? (
