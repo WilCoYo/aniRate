@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import TitleCards from '../../../components/TitleCards/TitleCards';
 import Navbar from '../../../components/Navbar/Navbar';
-import browse_background from '../../images/browse-background.jpg'
+import browse_background from '../../images/browse-background.webp'
 import search_icon from '../../images/search-icon.svg'
 
 import './Browse.css'
@@ -109,7 +109,7 @@ if (error) {
         <img src={search_icon} alt='magnifying glass' />
       </button>
     </div>
-      <img src={browse_background} alt='Cat with bandana' className='browse-background'/>
+      <img src={browse_background} alt='Anime background' className='browse-background'/>
         <div className='browse-component'>
             
 
