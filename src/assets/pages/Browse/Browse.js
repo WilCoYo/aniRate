@@ -94,7 +94,7 @@ if (error) {
     <>
     <Navbar />
     <div className='searchBar'>
-    <input
+      <input
         className='animeTextSearch'
         type="text"
         value={searchTerm}

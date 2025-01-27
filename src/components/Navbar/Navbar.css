@@ -13,7 +13,7 @@ a {
     position: absolute;
     font-size: 1rem;
     color: #e5e5e5;
-    background-image: linear-gradient(180deg, rgba(70, 70, 70, 0.8) 45%,
+    background-image: linear-gradient(180deg, rgba(131, 131, 131, 0.85) 45%,
     transparent);
     z-index: 15;
 }
@@ -34,7 +34,7 @@ a {
 }
 
 .pulse {
-    text-shadow: 0 0 5px #f26b84d3;
+    text-shadow: 0 0 10px #f26b84d3;
 }
 
 .navbar-left ul {
