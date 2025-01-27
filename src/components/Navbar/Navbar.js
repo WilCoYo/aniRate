@@ -52,6 +52,20 @@ function Navbar() {
               Browse all Anime
             </button>
           </li>
+          <li className='mobile'>
+            <div className="navbar-profile-mobile">
+              
+                <p
+                  onClick={() => {
+                    logout();
+                  }}
+                  className='pulse'
+                >
+                  Sign Out
+                </p>
+              
+            </div>
+          </li>
         </ul>
       
       </div>

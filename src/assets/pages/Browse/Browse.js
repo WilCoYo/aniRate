@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import TitleCards from '../../../components/TitleCards/TitleCards';
 import Navbar from '../../../components/Navbar/Navbar';
-import browse_background from '../../images/browse-background.webp'
+import browse_background from '../../images/browse-background.jpg'
 import search_icon from '../../images/search-icon.svg'
 
 import './Browse.css'
@@ -93,68 +93,75 @@ if (error) {
   return (
     <>
     <Navbar />
-    <div className='searchBar'>
-      <input
-        className='animeTextSearch'
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Search for Anime"
-      />
-      <button
-        onClick={handleSearch}
-        className='searchBtn'
-      >
-        <img src={search_icon} alt='magnifying glass' />
-      </button>
-    </div>
-      <img src={browse_background} alt='Anime background' className='browse-background'/>
-        <div className='browse-component'>
-            
+    <div className='browse-background'>
+    <div className='browse'>
+      
+          <div className='browse-component'>
+              
 
-            <div className='filter-searchbar'>
-                <ul className='filter-searchbar-list'>
-                  <li onClick={() => setFilter('all')}>All Anime</li>
-                  <li onClick={() => setFilter('top')}>Top Rated</li>
-                  <li onClick={() => setFilter('upcoming')}>Upcoming</li>
-                  <li></li>
-                  <li></li>
-                </ul>
+              <div className='filter-searchbar'>
+                  <ul className='filter-searchbar-list'>
+                    <li onClick={() => setFilter('all')}>All Anime</li>
+                    <li onClick={() => setFilter('top')}>Top Rated</li>
+                    <li onClick={() => setFilter('upcoming')}>Upcoming</li>
+                    <li></li>
+                    <li></li>
+                  </ul>
 
-            </div>
-
-            <div className='results-grid-container'>
-              <h1>{filter === 'top' 
-                    ? 'Browse Top Anime'
-                    : filter === 'all' 
-                    ? 'Browse All Anime'
-                    : filter === 'upcoming' 
-                    ? 'Browse Upcoming Anime'
-                    : '' } </h1>
-              <div className='results-list'>
-                  {animeList.map(
-                    (anime) => (
-                      anime && anime.mal_id && (
-                      <TitleCards key={anime.mal_id} anime={anime} />
-                  )
-                  ))}
               </div>
 
-              <div className="pagination-controls">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={page >= totalPages} 
+              <div className='results-grid-container'>
+                <h1>{filter === 'top' 
+                      ? 'Browse Top Anime'
+                      : filter === 'all' 
+                      ? 'Browse All Anime'
+                      : filter === 'upcoming' 
+                      ? 'Browse Upcoming Anime'
+                      : '' } 
+                </h1>
+
+                <div className='searchBar'>
+                  <input
+                    className='animeTextSearch'
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Search for Anime"
+                  />
+                  <button
+                    onClick={handleSearch}
+                    className='searchBtn'
                   >
-                  {page >= totalPages ? 'No More Results' : 'Load More'}
-                </button>
+                    <img src={search_icon} alt='magnifying glass' />
+                  </button>
+                </div>
+
+                <div className='results-list'>
+                    {animeList.map(
+                      (anime) => (
+                        anime && anime.mal_id && (
+                        <TitleCards key={anime.mal_id} anime={anime} />
+                    )
+                    ))}
+                </div>
+
+                <div className="pagination-controls">
+                  <button
+                    onClick={handleLoadMore}
+                    disabled={page >= totalPages} 
+                    >
+                    {page >= totalPages ? 'No More Results' : 'Load More'}
+                  </button>
+                </div>
+                  
+
               </div>
-                
-
-            </div>
 
 
+          </div>
         </div>
+    </div>
     </>
   )
 }

@@ -1,7 +1,4 @@
 .searchBar {
-    position: absolute;
-    top: 7.5rem;
-    right: 20rem;
     z-index: 11;
 }
 
@@ -22,6 +19,10 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.animeTextSearch::placeholder {
+    color: #fff;
+}
+
 .searchBtn {
     position: absolute;
     top: .5rem;
@@ -35,9 +36,22 @@
 
 .browse-background {
     position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 0;
+    max-height: 100vh;
+    background-image: url('../../images/browse-background.jpg');
+    background-size: cover; /* Ensure the background covers the entire element */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    width: 100%; /* Ensure it takes the full width of the container */
+    height: 100vh; /* Set the height to cover the viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.browse {
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -47,6 +61,8 @@
    height: 100vh; 
    width: 100%;
    position: relative;
+
+   
 }
 
 .filter-searchbar {
@@ -81,9 +97,16 @@
 }
 
 .results-grid-container {
+    overflow-y: auto;
     height: auto;
-    padding: 7rem 0 0 0;
+    padding: 7rem .5rem 1rem .5rem;
     margin: 0 auto;
+
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
     
 }
 
@@ -102,7 +125,7 @@
     width: 100%;
     justify-content: center; 
     overflow: visible; 
-    
+    z-index: 5;
 }
 
 .pagination-controls {
@@ -135,6 +158,19 @@
 
 
 @media only screen and (max-width: 27rem) {
+
+    .browse-background {
+        position: fixed;
+        right: 6rem;
+        top: -10rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: auto;
+    }
 
     .searchBar {
         position: absolute;

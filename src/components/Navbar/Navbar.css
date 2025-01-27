@@ -84,6 +84,10 @@ a {
     position: relative;
 }
 
+.navbar-profile-mobile {
+    display: none;
+}
+
 .navbar-profile:hover .dropdown{
     display:block;
 }
@@ -119,6 +123,10 @@ button:hover {
     cursor: pointer;
 }
 
+.mobile {
+    display: none;
+}
+
 @-webkit-keyframes slide-bottom {
     0% {
       -webkit-transform: translateY(0);
@@ -126,8 +134,8 @@ button:hover {
               opacity: 0;
     }
     100% {
-      -webkit-transform: translateY(10px);
-              transform: translateY(10px);
+      -webkit-transform: translateY(15px);
+              transform: translateY(15px);
               opacity: 1;
     }
   }
@@ -152,6 +160,11 @@ button:hover {
 
 
 @media only screen and (max-width: 27rem) {
+
+    .mobile {
+        display:inherit;
+    }
+
     .navbar {
         width: 100%;
         height: 3rem;
@@ -183,16 +196,15 @@ button:hover {
         position: absolute;
         top: 3rem; /* Below the navbar */
         right: 0;
-
-
-    
-
         
     }
 
+
     .navbar-left ul.open {
         display: flex;            /* Change to flex instead of block */
-        flex-direction: column;   /* Stack items vertically */
+        flex-direction: column; 
+        align-items: end;
+        /* Stack items vertically */
         list-style: none;
         background: #080808c9;
         padding: 1rem 1.5rem;
@@ -204,7 +216,9 @@ button:hover {
         width:fit-content;
     }
 
-
+    .navbar-profile-mobile {
+        display: block;
+    }
 
     .navbar-left li{
         text-align: center;
