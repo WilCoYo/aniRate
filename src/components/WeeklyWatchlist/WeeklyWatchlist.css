@@ -16,7 +16,7 @@
     flex-direction: column;
     gap: 1rem;
     margin-top: 1rem;
-    background-color: rgba(70, 70, 70, 0.75);
+    background-color: rgba(70, 70, 70, 0.95);
     overflow-y: hidden;  /* Changed back to 'scroll' */
     overflow-x: auto;
     white-space: nowrap;
@@ -37,7 +37,7 @@
 .watchlist h2 {
     text-align: center;
     font-size: 2rem;
-    background-color: rgba(70, 70, 70, 0.95);
+    background-color: rgba(70, 70, 70);
 }
 
 .weekday-list {

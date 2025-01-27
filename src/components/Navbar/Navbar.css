@@ -12,9 +12,12 @@ a {
     justify-content: space-between;
     position: absolute;
     font-size: 1rem;
-    color: #e5e5e5;
-    background-image: linear-gradient(180deg, rgba(131, 131, 131, 0.85) 45%,
-    transparent);
+     /* other styles */
+     background: rgba(39, 39, 39, 0.40);
+     backdrop-filter: blur(10px);
+     /* fallback for old browsers */
+     -webkit-backdrop-filter: blur(60px);
+     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 15;
 }
 
@@ -152,7 +155,6 @@ button:hover {
     .navbar {
         width: 100%;
         height: 3rem;
-        background-image: linear-gradient(180deg, rgb(114, 114, 114, .9) 90%, transparent);
         position: fixed;         /* Change from absolute to fixed */
         top: 0;
         left: 0;

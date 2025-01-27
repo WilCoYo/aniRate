@@ -8,6 +8,8 @@ import info_background from '../../images/info-background.jpg'
 
 import { addToWatchlist, auth} from '../../../firebase'
 
+import { toast } from 'react-toastify';
+
 function Info({onWatchlistUpdate}) {
     const userId = auth.currentUser?.uid;
     const location = useLocation();
@@ -23,11 +25,13 @@ function Info({onWatchlistUpdate}) {
     const handleAddToWatchlist = () => {
         if(userId) {
             addToWatchlist(userId, anime.mal_id);
+            toast.success('Anime added to watchlist');
             if (onWatchlistUpdate) {
                 onWatchlistUpdate(anime);
             }
         } else {
             console.log("User is not authenticated")
+            toast.error('Failed to add to watchlist');
         }
         
     }
@@ -45,11 +49,13 @@ return (
     
     <div className='anime'>
     
-        <div className='anime-image'>
-            <img 
-                src={anime.images.jpg.image_url} 
-                alt='Anime Cover Art'
-            />
+        <div className='anime-details-top'>
+            <div className='anime-image'>
+                <img 
+                    src={anime.images.jpg.image_url} 
+                    alt='Anime Cover Art'
+                />
+            </div>
             <div className='image-sidebar-info'>
                 <button className='add-btn'
                         onClick={handleAddToWatchlist}
@@ -57,21 +63,20 @@ return (
                     <img src={add_icon} alt=''/>Add to watchlist
                 </button>
                 <ul>
-                    <li>Rating: {anime.score}</li>
-                    <li>Status: {anime.status}</li>
+                    <li><strong>Rating: </strong> {anime.score}</li>
+                    <li><strong>Status: </strong>{anime.status}</li>
                     
                     <li>
                         {anime.episodes != null ? `Episodes: ${anime.episodes}` : ''}
                     </li>
-                    <li>Aired from: {anime.aired.string}</li>
+                    <li><strong>Aired from: </strong> {anime.aired.string}</li>
                     
-                    <li>Genres: {anime.genres.map((genre) => genre.name).join(', ')}</li> {/* pulling from array in API */}
+                    <li><strong>Genres: </strong>{anime.genres.map((genre) => genre.name).join(', ')}</li> {/* pulling from array in API */}
                     <li className='trailer'><a href={anime.trailer.url}>Trailer</a> </li>
-                    <li></li>
                 </ul>
             </div>
         </div>
-        <div className='anime-info'>
+        <div className='anime-details-bottom'>
             <h1>{anime.title_english || anime.title_japanese}</h1>
             
             <p>{anime.synopsis}</p>

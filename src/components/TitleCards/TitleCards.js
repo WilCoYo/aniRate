@@ -4,6 +4,7 @@ import './TitleCards.css'
 import info_icon from '../../assets/images/info-icon.svg'
 import add_icon from '../../assets/images/add-icon.svg'
 import { addToWatchlist, auth} from '../../firebase'
+import { toast } from 'react-toastify';
 
 
 
@@ -22,11 +23,13 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
     const handleAddToWatchlist = () => {
         if(userId) {
             addToWatchlist(userId, anime.mal_id);
+            toast.success('Anime added to watchlist');
             if (onWatchlistUpdate) {
                 onWatchlistUpdate(anime);
             }
         } else {
             console.log("User is not authenticated")
+            toast.error('Failed to add to watchlist');
         }
         
     }
