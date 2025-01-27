@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import TitleCards from '../../../components/TitleCards/TitleCards';
 import Navbar from '../../../components/Navbar/Navbar';
-import browse_background from '../../images/browse-background.jpg'
 import search_icon from '../../images/search-icon.svg'
 
 import './Browse.css'
