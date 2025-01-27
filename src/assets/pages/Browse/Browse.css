@@ -35,13 +35,9 @@
 
 .browse-background {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 0;
+    right: 0;
     z-index: 0;
-    height: 100vh;
-    width: 100%;
-    
-  
 }
 
 
@@ -139,5 +135,51 @@
 
 
 @media only screen and (max-width: 27rem) {
+
+    .searchBar {
+        position: absolute;
+        top: 4.5rem;
+        right: 2rem;
+        z-index: 11;
+    }
+
+
+    .browse-component {
+        display: flex;
+        flex-direction: column;
+        height: 100vh; 
+        width: 100%;
+        position: relative;
+     }
+
+     .filter-searchbar {
+        margin-top: 8rem;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        line-height: 2rem;
+        position: relative;
+    }
+
+    .results-grid-container {
     
+        padding: 0;
+      
+        
+    }
+
+     
+    .results-list {
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem; 
+        padding: 0; 
+        margin: 0;
+        width: 100%;
+       
+        
+    }
 }
