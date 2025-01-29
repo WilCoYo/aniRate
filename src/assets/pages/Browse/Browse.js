@@ -106,20 +106,15 @@ if (error) {
                     <li></li>
                     <li></li>
                   </ul>
-
               </div>
 
-              <div className='results-grid-container'>
-                <h1>{filter === 'top' 
-                      ? 'Browse Top Anime'
-                      : filter === 'all' 
-                      ? 'Browse All Anime'
-                      : filter === 'upcoming' 
-                      ? 'Browse Upcoming Anime'
-                      : '' } 
-                </h1>
 
-                <div className='searchBar'>
+              
+
+
+              <div className='results-grid-container'>
+
+              <div className='searchBar'>
                   <input
                     className='animeTextSearch'
                     type="text"
@@ -134,7 +129,20 @@ if (error) {
                   >
                     <img src={search_icon} alt='magnifying glass' />
                   </button>
-                </div>
+              </div>
+
+                <h1>{filter === 'top' 
+                      ? 'Browse Top Anime'
+                      : filter === 'all' 
+                      ? 'Browse All Anime'
+                      : filter === 'upcoming' 
+                      ? 'Browse Upcoming Anime'
+                      : '' } 
+                </h1>
+
+                
+
+                
 
                 <div className='results-list'>
                     {animeList.map(

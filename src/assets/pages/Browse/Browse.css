@@ -1,5 +1,8 @@
 .searchBar {
     z-index: 11;
+    width: 100%;
+    display: flex; 
+    justify-content: end;
 }
 
 .animeTextSearch {
@@ -97,16 +100,12 @@
 }
 
 .results-grid-container {
-    overflow-y: auto;
+    
     height: auto;
     padding: 7rem .5rem 1rem .5rem;
     margin: 0 auto;
 
-    -webkit-overflow-scrolling: touch;
-    
-    /* Hide scrollbar but keep functionality */
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+   
     
 }
 
@@ -124,8 +123,19 @@
     margin: 0 auto; 
     width: 100%;
     justify-content: center; 
-    overflow: visible; 
+    max-height: calc(100vh - 10rem);
+    overflow-y: auto;
     z-index: 5;
+
+    -webkit-overflow-scrolling: touch;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+}
+
+.results-list::-webkit-scrollbar {
+    display: none;
 }
 
 .pagination-controls {
@@ -151,6 +161,7 @@
   }
 
 
+
 /* 
 * {
     outline: 1px solid red;
@@ -161,8 +172,6 @@
 
     .browse-background {
         position: fixed;
-        right: 6rem;
-        top: -10rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -173,10 +182,9 @@
     }
 
     .searchBar {
-        position: absolute;
-        top: 4.5rem;
-        right: 2rem;
-        z-index: 11;
+        width: 100%;
+        display: flex; 
+        justify-content: center;
     }
 
 
@@ -189,7 +197,8 @@
      }
 
      .filter-searchbar {
-        margin-top: 8rem;
+        margin-top: 4rem;
+        margin-bottom: 1rem;
         padding-top: 0;
         padding-bottom: 0;
         height: fit-content;
@@ -199,9 +208,21 @@
         position: relative;
     }
 
+    .filter-searchbar-list {
+        width: 100%;
+    }
+
     .results-grid-container {
-    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 0;
+      
+        
+    }
+
+    .results-grid-container h1{
+        
       
         
     }
