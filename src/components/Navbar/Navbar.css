@@ -162,9 +162,7 @@ button:hover {
 }
 
 
-
-@media only screen and (max-width: 27rem) {
-
+@media only screen and (max-width: 46.875rem) {
     .mobile {
         display:inherit;
     }
@@ -241,5 +239,12 @@ button:hover {
     .dropdown-arrow {
         display: none;
     }
+}
+
+
+
+@media only screen and (max-width: 27rem) {
+
+
     
 }

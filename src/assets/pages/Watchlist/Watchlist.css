@@ -27,12 +27,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 8rem;
-    padding-bottom: 1rem;
+    padding-top: 6rem;
 }
 
 .watchlist-preview-header {
     text-align: center;
+    padding-bottom: 1rem;
 }
 
 
@@ -54,19 +54,20 @@
     overflow-y: auto; /* Allow scrolling within this container */
     max-height: none;
     height: auto;
-    margin: 0 1rem 0 1rem;
-    width: fit-content;
+    
+    width: 100%;
 }
 
 .watchlist-loading {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     height: 100%; /* Take full container height */
     width: 100%;  /* Take full container width */
     position: fixed; /* Ensure it's positioned correctly */
-    top: 0;
-    right: 5rem;
+    top: -10rem;
+    right: 6rem;
     z-index: 10; /* Ensure it appears above other content */    
 }
 .loading-gif {
@@ -76,11 +77,13 @@
 .watchlist-grid {
     display: grid;
     justify-content: center;
-    grid-template-columns: 15rem 15rem 15rem 15rem 15rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem; /* Adds spacing between items */
     max-height: none;
     height: auto;
     overflow-y: scroll;
-    max-width: 100%;
+    width: 100%;
+    padding: 0 1rem 0 1rem;
     /* other styles */
     background: rgba(39, 39, 39, 0.75);
     backdrop-filter: blur(10px);
@@ -112,6 +115,7 @@
     justify-content: start;
     align-items: center;
     flex-direction: column;
+    
 }
 
 .watchlist-item img {
@@ -131,7 +135,7 @@
 
     .watchlist-container {
         padding-top: 4rem;
-       
+
     }
 
     .watchlist-grid {
