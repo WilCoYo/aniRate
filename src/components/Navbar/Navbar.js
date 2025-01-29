@@ -19,7 +19,13 @@ function Navbar() {
     <div className="navbar">
       <div className="navbar-left">
         <div className='navbar-logo'>
-          <h1>Anime<strong className='pulse'>Pulse</strong></h1>
+          <h1
+             onClick={(e) => {
+              e.preventDefault();
+              navigate('/');
+            }}
+          >Anime<strong className='pulse'>Pulse</strong>
+          </h1>
         </div>
         <ul className={menuOpen ? "open slide-bottom" : ""}>
           <li>
