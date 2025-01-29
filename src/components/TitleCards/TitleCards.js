@@ -5,7 +5,7 @@ import info_icon from '../../assets/images/info-icon.svg'
 import add_icon from '../../assets/images/add-icon.svg'
 import { addToWatchlist, auth} from '../../firebase'
 import { toast } from 'react-toastify';
-
+import { DateTime } from 'luxon'
 
 
 
@@ -34,13 +34,32 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
         
     }
 
-    // const handleRemoveFromWatchlist = () => {
-    //     if(anime.mal_id) {
-    //         removeFromWatchlist(userId, anime.mal_id);
-    //     } else {
-    //         console.log("Anime not found or already deleted")
-    //     }
-    // }
+    const convertJSTtoUserTimezone = (inputString) => {
+        if(!inputString || typeof inputString !== "string") {
+            return "Invalid Time Format";
+        }
+
+
+        const timeMatch = inputString.match(/(\d{2}):(\d{2})/);
+
+        if(!timeMatch) return "Invalid time format";
+
+        const [_, hours, minutes] = timeMatch;
+
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        const jstTime = DateTime.fromObject(
+            { hour: parseInt(hours), minute: parseInt(minutes) },
+            { zone: "Asia/Tokyo" }
+        );
+
+        const userTime = jstTime.setZone(userTimeZone);
+
+        
+
+        return `Saturdays at ${userTime.toFormat("HH:mm")} (${userTimeZone})`;
+    };
+
 
     
 
@@ -58,7 +77,7 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
                             </div>  
                         ) :
                             <div className='anime-card-date-time'>
-                                <h4>{ anime.broadcast.string}</h4>
+                                <h4>{convertJSTtoUserTimezone(anime.broadcast.string)}</h4>
                             </div>
 
                         }
