@@ -40,24 +40,40 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
         }
 
 
-        const timeMatch = inputString.match(/(\d{2}):(\d{2})/);
+        const dayMatch = inputString.match(/(\w+days?) at (\d{2}):(\d{2})/);
+        if(!dayMatch) return "Invalid broadcast format";
 
-        if(!timeMatch) return "Invalid time format";
-
-        const [_, hours, minutes] = timeMatch;
+        const [_, dayOfWeek, hours, minutes] = dayMatch;
 
         const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-        const jstTime = DateTime.fromObject(
+        // Convert day name to a DateTime object in JST
+        const jstDateTime = DateTime.fromObject(
             { hour: parseInt(hours), minute: parseInt(minutes) },
             { zone: "Asia/Tokyo" }
-        );
+            ).set({ weekday: getWeekdayNumber(dayOfWeek) });
+        
 
-        const userTime = jstTime.setZone(userTimeZone);
+        const userDateTime = jstDateTime.setZone(userTimeZone);
+
+        const newDayOfWeek = userDateTime.toFormat("EEEE");
 
         
 
-        return `Saturdays at ${userTime.toFormat("HH:mm")} (${userTimeZone})`;
+        return `${newDayOfWeek} at ${userDateTime.toFormat("HH:mm")} (${userTimeZone})`;
+    };
+
+    const getWeekdayNumber = (dayString) => {
+        const daysMap = {
+            "Sundays": 7,
+            "Mondays": 1,
+            "Tuesdays": 2,
+            "Wednesdays": 3,
+            "Thursdays": 4,
+            "Fridays": 5,
+            "Saturdays": 6
+        };
+        return daysMap[dayString] || 7; // Default to Sunday if unknown
     };
 
 
