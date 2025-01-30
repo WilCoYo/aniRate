@@ -43,6 +43,7 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
         const dayMatch = inputString.match(/(\w+days?) at (\d{2}):(\d{2})/);
         if(!dayMatch) return "Invalid broadcast format";
 
+        // eslint-disable-next-line
         const [_, dayOfWeek, hours, minutes] = dayMatch;
 
         const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
