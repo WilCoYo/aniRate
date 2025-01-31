@@ -7,8 +7,12 @@ import { getWatchlistData, auth } from '../../firebase'
 
 import TitleCards from '../TitleCards/TitleCards'
 
+import convertJSTtoUserDay from '../../Utilities/convertJST'
 
 function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
+    const [currentWeekday, setCurrentWeekday] = useState('');
+    const [todaysWatchlist, setTodaysWatchlist] = useState([]);
+    const [loading, setLoading] = useState(true);
     const userId = auth.currentUser?.uid;
     const [watchlist, setWatchlist] = useState(propWatchlist || []);
 
@@ -16,16 +20,54 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
         setWatchlist(propWatchlist || []);
     }, [propWatchlist]);
 
-    // const handleRemoveToWatchlist = (animeId) => {
-    //     if(userId) {
-    //         removeFromWatchlist(userId, animeId);
-    //         // Update local state and trigger parent component update
-    //         const updatedWatchlist = watchlist.filter(anime => anime.mal_id !== animeId);
-    //         setWatchlist(updatedWatchlist);
-    //     } else {
-    //         console.log("User is not authenticated")
-    //     }
-    // }
+   
+    
+  
+  
+      useEffect(() => {
+          const dayMapping = {
+              'Sunday': 'sundays',
+              'Monday': 'mondays',
+              'Tuesday': 'tuesdays',
+              'Wednesday': 'wednesdays',
+              'Thursday': 'thursdays',
+              'Friday': 'fridays',
+              'Saturday': 'saturdays',
+          };
+  
+          const date = new Date();
+          const weekday = date.toLocaleString('en-US', { weekday: 'long' });
+          const normalizedWeekday = dayMapping[weekday] || weekday.toLowerCase() + 's';
+          setCurrentWeekday(normalizedWeekday);
+          console.log('Current Weekday:', normalizedWeekday);
+      }, []);
+  
+  
+  
+      useEffect(() => {
+        
+            const filteredAnime = watchlist.filter((anime) => {
+                // Log the original broadcast data before conversion
+                console.log('Original Broadcast:', anime.broadcast);
+                
+                const animeDay = convertJSTtoUserDay(anime.broadcast);
+                
+                // Log the conversion results
+                console.log(`Original Day: ${anime.broadcast.day}, Converted Day: ${animeDay}, Expected Day: ${currentWeekday}`);
+                
+                return animeDay === currentWeekday; 
+            });
+    
+            setTodaysWatchlist(filteredAnime);
+            setLoading(false);
+        
+    }, [currentWeekday, watchlist]);
+
+
+
+
+
+
 
 
     useEffect(() => {
@@ -88,7 +130,6 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     useEffect(() => {
         console.log('Watchlist:', watchlist);
         const wednesdayAnime = (watchlist || []).filter(anime => {
-            console.log('Anime broadcast:', anime?.broadcast.day);
             return anime?.broadcast?.day?.toLowerCase() === 'wednesdays'
         });
         setWednesday(wednesdayAnime);
