@@ -108,7 +108,7 @@ function Navbar({user}) {
                 navigate('/login');
               }}
             >
-              Sign In
+              Sign In/Out
             </p>
           </div>
           )}
