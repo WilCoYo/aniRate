@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import './TodaysWatchlist.css'
-import TitleCards from '../TitleCards/TitleCards'
+import TitleCards from '../../src/components/TitleCards/TitleCards'
 
 
 function TodaysWatchlist({ watchlist }) {

@@ -11,7 +11,9 @@ import convertJSTtoUserDay from '../../Utilities/convertJST'
 
 function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     const [currentWeekday, setCurrentWeekday] = useState('');
+    // eslint-disable-next-line
     const [todaysWatchlist, setTodaysWatchlist] = useState([]);
+    // eslint-disable-next-line
     const [loading, setLoading] = useState(true);
     const userId = auth.currentUser?.uid;
     const [watchlist, setWatchlist] = useState(propWatchlist || []);
@@ -47,15 +49,11 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
       useEffect(() => {
         
             const filteredAnime = watchlist.filter((anime) => {
-                // Log the original broadcast data before conversion
-                console.log('Original Broadcast:', anime.broadcast);
                 
-                const animeDay = convertJSTtoUserDay(anime.broadcast);
+                const { userWeekday } = convertJSTtoUserDay(anime.broadcast);
                 
-                // Log the conversion results
-                console.log(`Original Day: ${anime.broadcast.day}, Converted Day: ${animeDay}, Expected Day: ${currentWeekday}`);
-                
-                return animeDay === currentWeekday; 
+               
+                return userWeekday.toLowerCase() === currentWeekday.toLowerCase();
             });
     
             setTodaysWatchlist(filteredAnime);
@@ -64,9 +62,12 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     }, [currentWeekday, watchlist]);
 
 
+    const getAnimeWeekday = broadcastInfo => {
+        const { userWeekday } = convertJSTtoUserDay(broadcastInfo);
+                
 
-
-
+        return userWeekday.toLowerCase();
+    };
 
 
 
@@ -115,50 +116,49 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
 
     useEffect(() => {
         const mondayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'mondays'
+            getAnimeWeekday(anime?.broadcast) === 'monday'
         );
         setMondays(mondayAnime);
     }, [watchlist])
 
     useEffect(() => {
         const tuesdayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'tuesdays'
+            getAnimeWeekday(anime?.broadcast) === 'tuesday'
         );
         setTuesday(tuesdayAnime);
     }, [watchlist])
 
     useEffect(() => {
-        console.log('Watchlist:', watchlist);
-        const wednesdayAnime = (watchlist || []).filter(anime => {
-            return anime?.broadcast?.day?.toLowerCase() === 'wednesdays'
-        });
+        const wednesdayAnime = (watchlist || []).filter(anime => 
+            getAnimeWeekday(anime?.broadcast) === 'wednesday'
+        );
         setWednesday(wednesdayAnime);
     }, [watchlist])
     
     useEffect(() => {
         const thursdayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'thursdays'
+            getAnimeWeekday(anime?.broadcast) === 'thursday'
         );
         setThursday(thursdayAnime);
     }, [watchlist])
 
     useEffect(() => {
         const fridayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'fridays'
+            getAnimeWeekday(anime?.broadcast) === 'friday'
         );
         setFriday(fridayAnime);
     }, [watchlist])
 
     useEffect(() => {
         const saturdayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'saturdays'
+            getAnimeWeekday(anime?.broadcast) === 'saturday'
         );
         setSaturday(saturdayAnime);
     }, [watchlist])
 
     useEffect(() => {
         const sundayAnime = (watchlist || []).filter(anime => 
-            anime?.broadcast?.day?.toLowerCase() === 'sundays'
+            getAnimeWeekday(anime?.broadcast) === 'sunday'
         );
         setSunday(sundayAnime);
     }, [watchlist])

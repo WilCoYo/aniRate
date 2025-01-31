@@ -4,45 +4,35 @@ import { DateTime } from 'luxon'
 
 
 const convertJSTtoUserDay = (broadcastInfo) => {
-
-    const getWeekdayNumber = (dayString) => {
-        const daysMap = {
-            "Sundays": 7,
-            "Mondays": 1,
-            "Tuesdays": 2,
-            "Wednesdays": 3,
-            "Thursdays": 4,
-            "Fridays": 5,
-            "Saturdays": 6
-        };
-        return daysMap[dayString] || 7; // Default to Sunday if unknown
-    };
-
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    
-    const dayString = broadcastInfo?.day || 
-      (broadcastInfo?.string?.match(/(\w+days?)/)?.[1]) || "";
-    
-    const timeString = broadcastInfo?.string?.match(/at (\d{2}:\d{2})/)?.[1] || "00:00";
-    
-    const [hours, minutes] = timeString.split(':').map(Number);
-    
-    const jstDateTime = DateTime.local().setZone('Asia/Tokyo')
-      .set({ 
-        weekday: getWeekdayNumber(dayString),
-        hour: hours, 
-        minute: minutes,
-        second: 0, 
-        millisecond: 0 
-      });
-    
-    const userDateTime = jstDateTime.setZone(userTimeZone);
-    
-    // Different return for each use case
-    return {
-      fullDisplay: `${userDateTime.toFormat("EEEE")} at ${userDateTime.toFormat("HH:mm")} (${userTimeZone})`,
-      dayOnly: userDateTime.toFormat("EEEE").toLowerCase() + 's'
-    };
+  const daysMap = {
+      "Sundays": 7, "Mondays": 1, "Tuesdays": 2, "Wednesdays": 3,
+      "Thursdays": 4, "Fridays": 5, "Saturdays": 6
   };
+
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Extract day from broadcastInfo
+  const dayString = broadcastInfo?.day || (broadcastInfo?.string?.match(/\b(\w+days?)\b/)?.[1]) || "";
+  const weekday = daysMap[dayString] || null;
+
+  // Extract time from broadcastInfo
+  const timeString = broadcastInfo?.time || (broadcastInfo?.string?.match(/\b\d{2}:\d{2}\b/)?.[0]) || "00:00";
+  const [hours, minutes] = timeString.split(':').map(num => parseInt(num, 10) || 0);
+
+  // Create JST DateTime (Assume broadcast is in JST)
+  let jstDateTime = DateTime.now().setZone('Asia/Tokyo').startOf('week');  // Start from beginning of the week
+  if (weekday) jstDateTime = jstDateTime.set({ weekday });  // Apply weekday if found
+  jstDateTime = jstDateTime.set({ hour: hours, minute: minutes }); // Apply time
+
+  // Convert to user's timezone
+  const userDateTime = jstDateTime.setZone(userTimeZone);
+
+  return { 
+      userDateTimeString: userDateTime.isValid ? userDateTime.toLocaleString(DateTime.DATETIME_MED) : "Invalid DateTime",
+      userTime: userDateTime.isValid ? userDateTime.toFormat('hh:mm a') : "Invalid Time",
+      userWeekday: userDateTime.isValid ? userDateTime.toFormat('EEEE') : "Invalid Weekday"
+  };
+};
+   
 
   export default convertJSTtoUserDay;

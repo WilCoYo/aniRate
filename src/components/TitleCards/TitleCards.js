@@ -1,11 +1,11 @@
 import React from 'react'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './TitleCards.css'
 import info_icon from '../../assets/images/info-icon.svg'
 import add_icon from '../../assets/images/add-icon.svg'
 import { addToWatchlist, auth} from '../../firebase'
 import { toast } from 'react-toastify';
-import { DateTime } from 'luxon'
+import convertJSTtoUserDay from '../../Utilities/convertJST'
 
 
 
@@ -34,54 +34,19 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
         
     }
 
-    const convertJSTtoUserTimezone = (inputString) => {
-        if(!inputString || typeof inputString !== "string") {
-            return "Invalid Time Format";
-        }
-
-
-        const dayMatch = inputString.match(/(\w+days?) at (\d{2}):(\d{2})/);
-        if(!dayMatch) return "Invalid broadcast format";
-
-        // eslint-disable-next-line
-        const [_, dayOfWeek, hours, minutes] = dayMatch;
-
-        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-        // Convert day name to a DateTime object in JST
-        const jstDateTime = DateTime.fromObject(
-            { hour: parseInt(hours), minute: parseInt(minutes) },
-            { zone: "Asia/Tokyo" }
-            ).set({ weekday: getWeekdayNumber(dayOfWeek) });
-        
-
-        const userDateTime = jstDateTime.setZone(userTimeZone);
-
-        const newDayOfWeek = userDateTime.toFormat("EEEE");
-
-        
-
-        return `${newDayOfWeek} at ${userDateTime.toFormat("HH:mm")} (${userTimeZone})`;
-    };
-
-    const getWeekdayNumber = (dayString) => {
-        const daysMap = {
-            "Sundays": 7,
-            "Mondays": 1,
-            "Tuesdays": 2,
-            "Wednesdays": 3,
-            "Thursdays": 4,
-            "Fridays": 5,
-            "Saturdays": 6
-        };
-        return daysMap[dayString] || 7; // Default to Sunday if unknown
-    };
-
-
     
 
+    const displayDayTime = broadcastInfo => {
+        const result = convertJSTtoUserDay(broadcastInfo);
+// eslint-disable-next-line
+        return result?.userWeekday + "s" + " at " + result?.userTime;
 
 
+       
+    }
+    
+    
+    
 
     return (
         <div className={`anime-card ${parentComponent}`} >
@@ -94,7 +59,7 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
                             </div>  
                         ) :
                             <div className='anime-card-date-time'>
-                                <h4>{convertJSTtoUserTimezone(anime.broadcast.string)}</h4>
+                                <h4>{displayDayTime(anime.broadcast)}</h4>
                             </div>
 
                         }
