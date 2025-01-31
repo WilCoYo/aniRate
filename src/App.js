@@ -29,9 +29,9 @@ function App() {
       } else {
         console.log('Logged Out');
         // Redirect to '/login' unless already there
-        if (currentPath !== '/login') {
-          navigate('/login');
-        }
+        // if (currentPath !== '/login') {
+        //   navigate('/login');
+        // }
       }
     });
   

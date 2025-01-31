@@ -65,15 +65,28 @@ useEffect(() => {
 }, []);
 
 
+
+
 useEffect(() => {
   const fetchWatchlist =  async () => {
-    if(!user) return;
+    if(!user) {
+      if(seasonalAnime.length > 0) {
+        setWatchlist(seasonalAnime);
+        setLoading(false);
+      }
+      return;
+    }
+
+
+
+
 
     try {
       //Try to get cached data first
       const cachedWatchlist = getCachedData(user.uid);
       if(cachedWatchlist) {
         setWatchlist(cachedWatchlist);
+        setLoading(false);
         console.log('Cached Watchlist:', cachedWatchlist);
         return;
       }
@@ -91,15 +104,24 @@ useEffect(() => {
       const filteredData = animeData.filter(Boolean);
       setWatchlist(filteredData);
       console.log('Filtered Watchlist:', filteredData)
+
+       // Cache the fetched data
+       localStorage.setItem(`watchlist_${user.uid}`, JSON.stringify({
+        data: filteredData,
+        timestamp: Date.now()
+      }));
+
       }
     } catch (error) {
       console.error('Error fetching watchlist:', error);
       setError('Failed to load watchlist');
+    } finally {
+      setLoading(false);
     }
   };
 
   fetchWatchlist();
-}, [user, fetchAnimeData, getCachedData])
+}, [user, seasonalAnime, fetchAnimeData, getCachedData])
 
 
 
@@ -135,17 +157,16 @@ useEffect(() => {
 
 
 
-
 return (
   <div className='home'>
     <img src={hero_banner} alt='' className='banner-img' />
 
-    <Navbar />
+    <Navbar user={user} />
     
     <div className='home-top-row'>
       {/* <News seasonalAnime={seasonalAnime}/> */}
       {/* <TodaysWatchlist watchlist={watchlist} loading={loading} error={error} /> */}
-      <WeeklyWatchlist watchlist={watchlist} loading={loading} error={error} />
+      <WeeklyWatchlist watchlist={watchlist} loading={loading} error={error} user={user} />
     </div>
     
     <SeasonalAnime  seasonalAnime={seasonalAnime}/>

@@ -73,6 +73,8 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
 
     useEffect(() => {
         const fetchWatchlist = async () => {
+
+
           if (userId) {
             try {
               const watchlistIds = await getWatchlistData(userId);
@@ -115,6 +117,7 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
     const [sundays, setSunday] = useState([]);
 
     useEffect(() => {
+
         const mondayAnime = (watchlist || []).filter(anime => 
             getAnimeWeekday(anime?.broadcast) === 'monday'
         );

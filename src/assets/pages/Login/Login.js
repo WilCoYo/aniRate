@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate} from 'react-router-dom'
 import './Login.css'
 import { login, signup } from '../../../firebase';
 import loading_gif from '../../images/loading-anime.gif';
@@ -6,7 +7,7 @@ import loading_gif from '../../images/loading-anime.gif';
 
 
 function Login() {
-
+  const navigate = useNavigate();
   const [signState, setSignState] = useState("Sign In");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +39,12 @@ function Login() {
       
       <div className='login-form'>
         <div className='login-title'>
-          <h1>Anime<strong className='text-focus-in'>Pulse</strong></h1>
+          <h1
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/');
+          }}
+          >Anime<strong className='text-focus-in'>Pulse</strong></h1>
         </div>
         <h1>{signState}</h1>
         <form>

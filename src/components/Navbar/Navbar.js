@@ -9,22 +9,23 @@ import hamburger_icon from '../../assets/images/hamburger-menu.svg'
 import { logout} from '../../firebase'
 
 
-function Navbar() {
+function Navbar({user}) {
   const navigate = useNavigate();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-
+  console.log(user);
+ 
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <div className='navbar-logo'>
-          <h1
-             onClick={(e) => {
+        <div 
+           onClick={(e) => {
               e.preventDefault();
               navigate('/');
             }}
-          >Anime<strong className='pulse'>Pulse</strong>
+          className='navbar-logo'>
+          <h1>Anime<strong className='pulse'>Pulse</strong>
           </h1>
         </div>
         <ul className={menuOpen ? "open slide-bottom" : ""}>
@@ -88,16 +89,31 @@ function Navbar() {
             className="dropdown-arrow"
           />
           
-          
-          <div className="dropdown slide-bottom">
+          {user === null ? (
+            <div className="dropdown slide-bottom">
+            <p
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/login');
+              }}
+            >
+              Sign In/Out
+            </p>
+          </div>
+          ) : (
+            <div className="dropdown slide-bottom">
             <p
               onClick={() => {
                 logout();
+                navigate('/login');
               }}
             >
-              Sign Out
+              Sign In
             </p>
           </div>
+          )}
+
+          
         </div>
         <img
             src={hamburger_icon}
