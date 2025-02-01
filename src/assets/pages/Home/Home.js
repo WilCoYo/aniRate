@@ -7,6 +7,7 @@ import Navbar from '../../../components/Navbar/Navbar';
 import SeasonalAnime from '../../../components/SeasonalAnime/SeasonalAnime';
 
 import hero_banner from '../../images/hero-image-3.jpg';
+
 import WeeklyWatchlist from '../../../components/WeeklyWatchlist/WeeklyWatchlist';
 
 
@@ -159,6 +160,7 @@ useEffect(() => {
 
 return (
   <div className='home'>
+    
     <img src={hero_banner} alt='' className='banner-img' />
 
     <Navbar user={user} />

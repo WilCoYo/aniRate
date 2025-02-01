@@ -3,7 +3,7 @@ import { useNavigate} from 'react-router-dom'
 import './Login.css'
 import { login, signup } from '../../../firebase';
 import loading_gif from '../../images/loading-anime.gif';
-// import { getFirestore } from 'firebase/firestore';
+import close_icon from '../../images/x-close-symbol.svg';
 
 
 function Login() {
@@ -30,12 +30,35 @@ function Login() {
     }
   };
 
+  const disableWarningMessage = () => {
+    const warningElement = document.getElementById('beta-page-warning');
+    if(warningElement) {
+      warningElement.style.display = 'none';
+    } else {
+      console.error("Element with ID 'beta-page-warning' not found.")
+    }
+  }
+
   return (
     loading?<div className='login-gif'>
       <img src={loading_gif} alt='Anime girl running' />
     </div>:
     <div className='login'>
+        <div id='beta-page-warning'>
       
+      <div>
+        <strong className='pulse beta-title'>Thanks for visiting AniRate!!!</strong><br></br><br></br>
+        This site is still in a testing phase so if you see any bugs,<br></br>
+        formatting issues, or have suggestions, please let me know!<br></br>
+        Enjoy!!
+      </div>
+      <img
+        className='close-icon'
+        alt='Closing X icon'
+        src={close_icon}
+        onClick={() => disableWarningMessage()}
+      />
+    </div>
       
       <div className='login-form'>
         <div className='login-title'>
