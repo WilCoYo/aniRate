@@ -101,70 +101,77 @@ if (error) {
               <div className='filter-searchbar'>
                   <ul className='filter-searchbar-list'>
                     <li onClick={() => setFilter('all')}>All Anime</li>
+                    <li className='mobile'>|</li>
                     <li onClick={() => setFilter('top')}>Top Rated</li>
+                    <li className='mobile'>|</li>
                     <li onClick={() => setFilter('upcoming')}>Upcoming</li>
-                    <li></li>
-                    <li></li>
+                    
+                    
                   </ul>
               </div>
 
 
               
+            <div className='browse-container'>
 
-
-              <div className='results-grid-container'>
-
-              <div className='searchBar'>
-                  <input
-                    className='animeTextSearch'
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Search for Anime"
-                  />
-                  <button
-                    onClick={handleSearch}
-                    className='searchBtn'
-                  >
-                    <img src={search_icon} alt='magnifying glass' />
-                  </button>
-              </div>
-
-                <h1>{filter === 'top' 
-                      ? 'Browse Top Anime'
-                      : filter === 'all' 
-                      ? 'Browse All Anime'
-                      : filter === 'upcoming' 
-                      ? 'Browse Upcoming Anime'
-                      : '' } 
-                </h1>
+              <div className='results-header'>
 
                 
 
-                
+                  <h1>{filter === 'top' 
+                        ? 'Browse Top Anime'
+                        : filter === 'all' 
+                        ? 'Browse All Anime'
+                        : filter === 'upcoming' 
+                        ? 'Browse Upcoming Anime'
+                        : '' } 
+                  </h1>
 
-                <div className='results-list'>
-                    {animeList.map(
-                      (anime) => (
-                        anime && anime.mal_id && (
-                        <TitleCards key={anime.mal_id} anime={anime} />
-                    )
-                    ))}
-                </div>
-
-                <div className="pagination-controls">
-                  <button
-                    onClick={handleLoadMore}
-                    disabled={page >= totalPages} 
+                  <div className='searchBar'>
+                    <input
+                      className='animeTextSearch'
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Search for Anime"
+                    />
+                    <button
+                      onClick={handleSearch}
+                      className='searchBtn'
                     >
-                    {page >= totalPages ? 'No More Results' : 'Load More'}
-                  </button>
+                      <img src={search_icon} alt='magnifying glass' />
+                    </button>
                 </div>
+
+              </div>  
+
+                <div className='results-grid-container'>
+                
+
+                  <div className='results-list'>
+                      {animeList.map(
+                        (anime) => (
+                          anime && anime.mal_id && (
+                          <TitleCards key={anime.mal_id} anime={anime} parentComponent="browse-results"/>
+                      )
+                      ))}
+
+                    <div className="pagination-controls">
+                      <button
+                        onClick={handleLoadMore}
+                        disabled={page >= totalPages} 
+                        >
+                        {page >= totalPages ? 'No More Results' : 'Load More'}
+                      </button>
+                    </div>
+                  </div>
+
+                  
                   
 
-              </div>
-
+                </div>
+            </div>             
 
           </div>
         </div>

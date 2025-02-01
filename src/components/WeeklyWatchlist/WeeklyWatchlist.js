@@ -328,7 +328,7 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
                                     <ul id='sundays-list' className='weekday-list'>
                                         {sundays.map((anime, index) => (
                                             <li key={index}>
-                                                <TitleCards key={anime.mal_id} anime={anime} />
+                                                <TitleCards key={anime?.mal_id} anime={anime} />
                                             
                                             </li>
                                             

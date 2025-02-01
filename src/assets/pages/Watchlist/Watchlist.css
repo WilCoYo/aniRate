@@ -140,7 +140,7 @@
 
     .watchlist-grid {
         display: grid;
-        justify-content: space-evenly;
+        justify-content: space-evenly; 
         grid-template-columns: 10rem 10rem;
         max-width: 100%;
     }

@@ -1,6 +1,5 @@
 .searchBar {
     z-index: 11;
-    width: 100%;
     display: flex; 
     justify-content: end;
 }
@@ -8,7 +7,7 @@
 .animeTextSearch {
   
     width: 20rem;
-    color: white;
+    color: white; 
     font-family: 'poppins';
     padding: .5rem;
     border-radius: 5rem;
@@ -19,7 +18,7 @@
       box-shadow: 0px 0px 5px grey;
       /* fallback for old browsers */
       -webkit-backdrop-filter: blur(60px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.712);
 }
 
 .animeTextSearch::placeholder {
@@ -39,14 +38,12 @@
 
 .browse-background {
     position: fixed;
-    max-height: 100vh;
     background-image: url('../../images/browse-background.jpg');
-    background-size: cover; /* Ensure the background covers the entire element */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the background from repeating */
-    width: 100%; /* Ensure it takes the full width of the container */
-    height: 100vh; /* Set the height to cover the viewport */
-    position: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
     top: 0;
     left: 0;
     z-index: -1;
@@ -56,27 +53,31 @@
     position: relative;
     z-index: 1;
     width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 
 .browse-component {
-   display: flex;
-   justify-content: space-between;
-   height: 100vh; 
-   width: 100%;
-   position: relative;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    position: relative;
 
    
 }
 
 .filter-searchbar {
-    padding-top: 10rem;
-    padding-bottom: 10rem;
+    padding: 10rem 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    line-height: 2rem;
+    background: rgba(39, 39, 39, 0.40);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(60px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
    
 }
 
@@ -100,22 +101,37 @@
     scale: 1.1;
 }
 
-.results-grid-container {
-    
-    height: auto;
-    padding: 7rem .5rem 1rem .5rem;
-    margin: 0 auto;
-    width: 100%;
+.browse-container {
+    flex: 1;
+    height: 100vh;
+    overflow: hidden; /* Contain the scrollable area */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;   
+}
+
+.results-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: .5rem;
+    margin-top: 5rem;
+}
+
+.results-grid-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Contain the list */
+    padding: 2rem .5rem 1rem;
+      
 }
 
 .results-grid-container h1 {
     text-align: center;
     width: 100%;
     z-index: 15;
+    margin-bottom: 1rem;
 }
 
 .results-list {
@@ -123,16 +139,13 @@
     justify-content: center;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: 1rem; 
-    padding: 2rem 0; 
     margin: 0 auto; 
     width: 100%;
-    max-height: calc(100vh - 10rem);
+    max-height: calc(100vh - 15vh);
     overflow-y: auto;
     z-index: 5;
     -webkit-overflow-scrolling: touch;
-    /* Hide scrollbar but keep functionality */
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+ 
 }
 
 .results-list::-webkit-scrollbar {
@@ -145,6 +158,7 @@
     align-items: center;
     margin-top: 1rem;
     gap: 1rem; 
+    height:fit-content
   }
   
   .pagination-controls button {
@@ -161,7 +175,9 @@
     cursor: not-allowed;
   }
 
-
+  .mobile {
+    display: none;
+  }
 
 /* 
 * {
@@ -169,7 +185,30 @@
 } */
 
 
+@media only screen and (max-width: 40rem) {
+    .results-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2rem;
+    }
+
+    .results-header {
+       
+        margin-top: 0rem;
+    }
+}
+
 @media only screen and (max-width: 27rem) {
+
+    .mobile {
+        display: block;
+      }
+
+    .animeTextSearch {
+        margin-bottom: 1rem;
+        
+    }
 
     .browse-background {
         position: fixed;
@@ -180,6 +219,12 @@
         margin: 0 auto;
         width: 100%;
         height: auto;
+    }
+
+    .browse-container {
+        
+        overflow: auto; /* Contain the scrollable area */
+       
     }
 
     .searchBar {
@@ -211,33 +256,34 @@
 
     .filter-searchbar-list {
         width: 100%;
+        display: flex;
+        justify-content: space-evenly;
     }
 
     .results-grid-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0;
-      
+        padding: 0rem;
+        
         
     }
 
-    .results-grid-container h1{
+    
+     .results-list {
+        padding-top: 2rem;
         
-      
-        
-    }
 
-     
-    .results-list {
-        display: flex; 
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem; 
-        padding: 0; 
-        margin: 0;
-        width: 100%;
-       
-        
-    }
+         /* other styles */
+        background: rgba(39, 39, 39, 0.40);
+        backdrop-filter: blur(10px);
+        /* fallback for old browsers */
+        -webkit-backdrop-filter: blur(60px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+     }
+  
+
+   
+
+    
 }

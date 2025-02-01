@@ -50,27 +50,27 @@ function TitleCards({anime, onWatchlistUpdate, parentComponent}) {
 
     return (
         <div className={`anime-card ${parentComponent}`} >
-            <div className='card-list'>
+            <div className={`card-list ${parentComponent}`}>
                 
-                    <div className='anime-image'>
-                        {anime.broadcast.string === 'unknown' ? (
+                    <div className='anime-image '>
+                        {anime?.broadcast?.string === 'unknown' ? (
                             <div className={`anime-card-date-time ${parentComponent}`}>
                                 <h4>Broadcast Info Unknown</h4>
                             </div>  
                         ) :
                             <div className='anime-card-date-time'>
-                                <h4>{displayDayTime(anime.broadcast)}</h4>
+                                <h4>{displayDayTime(anime?.broadcast)}</h4>
                             </div>
 
                         }
                        
                         <img
                             
-                            src={anime.images.jpg.image_url} 
+                            src={anime?.images?.jpg.image_url} 
                             alt='Anime Cover Art'
                         />
                         <div className='anime-card-caption'>
-                            <h4>{ anime.title_english || anime.title }</h4>
+                            <h4>{ anime?.title_english || anime?.title }</h4>
                         </div>
                     
                     </div>
