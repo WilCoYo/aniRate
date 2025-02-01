@@ -15,6 +15,12 @@ function Navbar({user}) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   console.log(user);
+
+  const sendEmailButton = () => { 
+    window.location.href = `mailto:wilcoyonkin@gmail.com?subject='AniRate Support Ticket'&body=Body`;
+    
+  }
+
  
   return (
     <div className="navbar">
@@ -59,6 +65,14 @@ function Navbar({user}) {
               Browse all Anime
             </button>
           </li>
+          <li className='support mobile'>
+            <button
+              onClick={() => sendEmailButton()}
+            >
+              Support
+            </button>
+          </li>
+          
           <li className='mobile'>
               {!user || user === null ? (
                 <div className="navbar-profile-mobile">
@@ -77,6 +91,7 @@ function Navbar({user}) {
 
               ) : (
                 <div className="navbar-profile-mobile">
+                  
               
                 <p
                   onClick={(e) => {
@@ -97,6 +112,7 @@ function Navbar({user}) {
       
       </div>
       <div className="navbar-right">
+        
         <div className="navbar-profile">
           <img
             src={profile_icon}
@@ -122,6 +138,13 @@ function Navbar({user}) {
           </div>
           ) : (
             <div className="dropdown slide-bottom">
+            <p className='support'>
+              <button
+                onClick={() => sendEmailButton()}
+              >
+                Support
+              </button>
+            </p>
             <p
               onClick={(e) => {
                 e.preventDefault();

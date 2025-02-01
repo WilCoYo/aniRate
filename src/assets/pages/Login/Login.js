@@ -39,6 +39,13 @@ function Login() {
     }
   }
 
+  const sendEmailButton = () => { 
+    window.location.href = `mailto:wilcoyonkin@gmail.com?subject='AniRate Support Ticket'&body=Body`;
+    
+  }
+
+
+
   return (
     loading?<div className='login-gif'>
       <img src={loading_gif} alt='Anime girl running' />
@@ -89,7 +96,10 @@ function Login() {
               <input type='checkbox' />
               <label htmlFor=''>Remember Me</label>
             </div>
-            <p>Need Help?</p>
+            <p
+              className='help-button'
+              onClick={() => sendEmailButton()}
+            >Need Help?</p>
           </div>
         </form>
 

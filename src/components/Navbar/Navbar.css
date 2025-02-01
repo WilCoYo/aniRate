@@ -64,6 +64,11 @@ a {
     scale: 1.1;
 }
 
+.support {
+    padding-bottom: 1rem;
+    font-weight: bold;
+}
+
 .navbar-right {
     display: flex;
     align-items: center;
@@ -130,6 +135,12 @@ button:hover {
 .mobile {
     display: none;
 }
+
+.dropdown p:hover {
+    scale: 1.1;
+    cursor: pointer;
+}
+
 
 @-webkit-keyframes slide-bottom {
     0% {

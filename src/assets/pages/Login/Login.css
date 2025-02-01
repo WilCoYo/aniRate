@@ -38,6 +38,8 @@
     font-size: 2rem;
 }
 
+
+
 .login {
     height: 100vh;
     background-color: white;
@@ -65,6 +67,14 @@
 }
 
 .login-title h1:hover {
+    cursor: pointer;
+}
+
+.help-button {
+    z-index: 100;
+}
+
+.help-button:hover {
     cursor: pointer;
 }
 
