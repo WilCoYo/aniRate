@@ -50,7 +50,7 @@ function WeeklyWatchlist({onWatchlistUpdate, watchlist: propWatchlist}) {
         
             const filteredAnime = watchlist.filter((anime) => {
                 
-                const { userWeekday } = convertJSTtoUserDay(anime.broadcast);
+                const { userWeekday } = convertJSTtoUserDay(anime?.broadcast);
                 
                
                 return userWeekday.toLowerCase() === currentWeekday.toLowerCase();

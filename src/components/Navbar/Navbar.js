@@ -60,11 +60,28 @@ function Navbar({user}) {
             </button>
           </li>
           <li className='mobile'>
-            <div className="navbar-profile-mobile">
+              {!user || user === null ? (
+                <div className="navbar-profile-mobile">
               
                 <p
-                  onClick={() => {
-                    logout();
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/login');
+                  }}
+                  className='pulse'
+                >
+                  Sign In
+                </p>
+              
+            </div>
+
+              ) : (
+                <div className="navbar-profile-mobile">
+              
+                <p
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logout().then(() => navigate('/login'));
                   }}
                   className='pulse'
                 >
@@ -72,6 +89,9 @@ function Navbar({user}) {
                 </p>
               
             </div>
+              )} 
+
+            
           </li>
         </ul>
       
@@ -89,7 +109,7 @@ function Navbar({user}) {
             className="dropdown-arrow"
           />
           
-          {user === null ? (
+          {user === null || !user ? (
             <div className="dropdown slide-bottom">
             <p
               onClick={(e) => {
@@ -97,18 +117,19 @@ function Navbar({user}) {
                 navigate('/login');
               }}
             >
-              Sign In/Out
+              Sign In
             </p>
           </div>
           ) : (
             <div className="dropdown slide-bottom">
             <p
-              onClick={() => {
-                logout();
-                navigate('/login');
+              onClick={(e) => {
+                e.preventDefault();
+                logout().then(() => navigate('/login'));
               }}
+              
             >
-              Sign In/Out
+              Sign Out
             </p>
           </div>
           )}
