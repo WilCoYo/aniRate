@@ -55,7 +55,7 @@ function Login() {
       
       <div>
         <strong className='pulse beta-title'>Thanks for visiting AniRate!!!</strong><br></br><br></br>
-        This site is still in a testing phase so if you see any bugs,<br></br>
+        This site is still in a testing phase so if you see any bugs,
         formatting issues, or have suggestions, please let me know!<br></br>
         Enjoy!!
       </div>
