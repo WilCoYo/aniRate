@@ -4,7 +4,7 @@
 .home {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; 
     position: relative;
     min-height: 100vh;
     width: 100%;
@@ -15,6 +15,8 @@
 .banner-img {
     position: fixed;
     min-width: 100%;
+    height: 100%;
+    
    
     /* mask-image: linear-gradient(to right, transparent, black 75%);
     -webkit-mask-image: linear-gradient(to right, transparent, black 75%); */
@@ -30,9 +32,7 @@
 
 @media only screen and (max-width: 27rem) {
     .banner-img {
-        position: fixed;
-        min-height: 100vh;
-        right: 0;
+       
     }
     
 }
